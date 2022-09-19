@@ -8,6 +8,11 @@ function editAttribute(tableRow, attribute) {
     form = document.submitedits;
 
     /////////////////
+    // Hide any messages from previous edits
+    message = document.getElementById('editattributeresult');
+    if (message) { message.style.display = "none"; }
+
+    /////////////////
     // Building attribute user text input field within "td:nth-child(3)"
     var td = document.createElement('td');// Create <td></td>
     td.style = "padding:4px;"

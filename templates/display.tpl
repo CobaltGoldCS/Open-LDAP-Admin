@@ -21,9 +21,13 @@
 
             <div class="panel-body">
             {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
-                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
+                {if $editattributeresult eq 'successfuledit'}
+                    <div class="alert alert-success" id="editattributeresult"><i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}</div>
+                {else}
+                    <div class="alert alert-warning" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
+                {/if}
             {elseif $editattributeresult neq ''}
-                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> Error: {$editattributeresult}</div>
+                <div class="alert alert-danger" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> Error: {$editattributeresult}</div>
             {/if}
                 <form name="submitedits">
                     <div class="table-responsive">
