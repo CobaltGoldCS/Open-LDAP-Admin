@@ -37,7 +37,7 @@
                         {continue}
                     {/if}
                     {* Programming Note: between <tr></tr> tag gets overwritten by editattribute.js upon click event *}
-                     <tr id="attribute-{$item}">
+                     <tr id="attribute-{$attribute}">
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
                             </th>
@@ -54,11 +54,9 @@
                             {/if}
                             </td>
                             <td>
-                            {if ({$entry.$attribute.0})}
-                                {foreach $item as $value}
-                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
-                                {/foreach}
-                            {/if}
+                            {foreach $attribute as $value}
+                                <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                            {/foreach}
                             </td>
                         </tr>
                     {/foreach}
