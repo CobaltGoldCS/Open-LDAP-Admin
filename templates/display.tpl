@@ -51,7 +51,7 @@
                             <td>
                             {if ({$entry.$attribute.0})}
                                 {foreach $item as $value}
-                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="javascript: editattribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
                                 {/foreach}
                             {/if}
                             </td>
