@@ -27,7 +27,7 @@ function editAttribute(tableRow, attribute) {
     var saveButton = document.createElement('button');// Create text input field <button></button>
     saveButton.id = "edit-"+attribute;
     saveButton.type = "submit";
-    saveButton.style = "border:none;background:none;font-size:18px";
+    saveButton.style = "border:none;background:none;font-size:18px;";
     saveButton.className = "fa fad fa-save";
     saveButton.onclick = function(){
         form.action = "index.php?page=editattribute";
@@ -38,7 +38,7 @@ function editAttribute(tableRow, attribute) {
     // Building edit cancel button within "td:nth-child(4)"
     var cancelButton = document.createElement('button');// Create text input field <button></button>
     cancelButton.id = "edit-"+attribute;
-    cancelButton.style = "border:none;background:none;font-size:18px";
+    cancelButton.style = "border:none;background:none;font-size:18px;";
     cancelButton.className = "fa fad fa-remove";
     cancelButton.onclick = function(){
         console.log("Exiting");
