@@ -32,7 +32,8 @@
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
                     {/if}
-                    <tr id="attribute-{$item}">
+                    {* Programming Note: between <tr></tr> tag gets overwritten by editattribute.js upon click event *}
+                     <tr id="attribute-{$item}">
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
                             </th>
