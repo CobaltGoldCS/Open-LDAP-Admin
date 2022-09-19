@@ -29,7 +29,7 @@ if ( isset($_POST["attribute"]) and isset($_POST["dn"]) and isset($_POST["editFi
         $errno = ldap_errno($ldap);
 
         if ( $errno != 0 ) {// If there's an ldap error, stop here.
-            $result = "Error: cannot modify attribute (".ldap_error($ldap).")";
+            $result = "Cannot modify attribute (".ldap_error($ldap).")";
         } else {
             $result = "successfuledit";
         }
