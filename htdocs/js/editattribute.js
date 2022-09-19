@@ -4,6 +4,8 @@ function editattribute(tableRow, attribute) {
     var targetAttribute = tableRow.querySelector("td:nth-child(3)");// Get attribute cell
     var targetEditButton = tableRow.querySelector("td:nth-child(4)");// Get edit button cell
     
+    /////////////////
+    // Building attribute user text input field
     var td = document.createElement('td');// Create <td></td>
     td.style = "padding:4px;"
 
@@ -16,14 +18,16 @@ function editattribute(tableRow, attribute) {
     td.appendChild(input);// Wrap text input field in <td></td>
     tableRow.replaceChild(td, targetAttribute);// Replace DOM element with text input field
 
+    /////////////////
+    // Building edit submit/save button
     var button = document.createElement('button');// Create text input field
-    button.id = "editattribute";
+    button.id = "edit-"+attribute;
     button.type = "submit";
-    button.style = "border:none;background:none;color:green;";
-    button.className = "fa fa-fw fa-check-square-o";
+    button.style = "border:none;background:none;color:green;font-weight:16px";
+    button.className = "fa fad fa-save";
 
     var td2 = document.createElement('td');// Create <td></td>
-    td2.appendChild(button);// Wrap text input field in <form></form>
+    td2.appendChild(button);// Append button to td2
     tableRow.replaceChild(td2, targetEditButton);// Replace DOM element with text input field
 
     attributeField = document.createElement('input');
@@ -31,35 +35,19 @@ function editattribute(tableRow, attribute) {
     attributeField.name = "attribute";
     attributeField.value = attribute;
     tableRow.appendChild(attributeField);
-    
-    // dnField = document.createElement('input');
-    // dnField.type = 'hidden';
-    // dnField.name = "dn";
-    // dnField.value = dn;
-    // tableRow.appendChild(dnField);
 
+    /////////////////
+    // Enable form-action after initial edit-click
     form = document.getElementById("submitedits");
     form.action = "index.php?page=editattribute";
 
-    // var form = document.createElement('form');// Create <form></form>
-    // form.action = "index.php?page=editattribute";
-    // form.method = "post";
-    // console.log(tableRow.outerHTML);
-    // form.innerHTML = tableRow.outerHTML;
-    // console.log(tableRow.outerHTML);
-
-    // tableRow.parentElement.replaceChild(form,tableRow);
-
-    // tableRow.appendChild(form, tableRow);// Wrap tr field in <form></form>
-    // attributeTable = document.getElementById("attributes");
-    // form.appendChild(attributeTable);
-
-    // formStart = '<form method="post" action="index.php?page=editattributed">';
-    // tableRow.parentElement.insertAdjacentHTML("afterBegin",formStart);
-
-    // formEnd = '</form>';
-    // tableRow.parentElement.insertAdjacentHTML("afterEnd",formEnd);
-
-    console.log(form);
+    /////////////////
+    // Disable other edit buttons temporarily for better UX
+    var otherButtons = form.getElementsByTagName("button");
+    for (let i = 0; i < otherButtons.length; i++){
+        if (otherButtons[i].id != "edit-"+attribute) {
+            otherButtons[i].disabled = true;
+        }
+    }
 
 }

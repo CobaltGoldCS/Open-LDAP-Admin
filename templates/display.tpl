@@ -23,7 +23,7 @@
 
                 <form id="submitedits" method="post">
                     <div class="table-responsive">
-                    <table id="attributes" class="table table-striped table-hover">
+                    <table class="table table-striped table-hover">
                     {foreach $card_items as $item}
                     {$attribute=$attributes_map.{$item}.attribute}
                     {$type=$attributes_map.{$item}.type}
@@ -32,7 +32,7 @@
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
                     {/if}
-                    <tr>
+                    <tr id="attributes-row">
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
                             </th>
@@ -51,7 +51,7 @@
                             <td>
                             {if ({$entry.$attribute.0})}
                                 {foreach $item as $value}
-                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editattribute(this.parentElement.parentElement,'{$value}')"></button>
+                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="javascript: editattribute(document.getElementById('attributes-row'),'{$value}')"></button>
                                 {/foreach}
                             {/if}
                             </td>
