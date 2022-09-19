@@ -16,8 +16,8 @@ function editAttribute(tableRow, attribute) {
     input.name = "editField";
     input.id = "edit-"+attribute;
     input.className = "form-control";
-    input.value = targetAttribute.innerText;
-    input.placeholder = targetAttribute.innerText;
+    input.value = ( targetAttribute.innerText.includes('Not defined') ) ? "" : targetAttribute.innerText;
+    input.placeholder = ( targetAttribute.innerText.includes('Not defined') ) ? "" : targetAttribute.innerText;
     input.style = "height:100%;"
     td.appendChild(input);// Wrap text input field in <td></td>
     tableRow.replaceChild(td, targetAttribute);// Replace DOM element with text input field
