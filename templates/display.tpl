@@ -32,7 +32,7 @@
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
                     {/if}
-                    <tr id="attributes-row">
+                    <tr id="attribute-{$item}">
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
                             </th>
@@ -51,7 +51,7 @@
                             <td>
                             {if ({$entry.$attribute.0})}
                                 {foreach $item as $value}
-                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="javascript: editattribute(document.getElementById('attributes-row'),'{$value}')"></button>
+                                    <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="javascript: editattribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
                                 {/foreach}
                             {/if}
                             </td>
