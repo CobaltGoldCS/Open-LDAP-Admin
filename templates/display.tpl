@@ -20,8 +20,12 @@
             </div>
 
             <div class="panel-body">
-
-                <form id="submitedits" method="post">
+            {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
+            {elseif $editattributeresult neq ''}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> Error: {$editattributeresult}</div>
+            {/if}
+                <form name="submitedits">
                     <div class="table-responsive">
                     <table class="table table-striped table-hover">
                     {foreach $card_items as $item}
@@ -62,7 +66,6 @@
                     </div>
                 <input type="hidden" name="dn" value="{$dn}">
                 </form>
-            
             </div>
         </div>
 

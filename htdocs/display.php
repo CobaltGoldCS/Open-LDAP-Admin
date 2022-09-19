@@ -24,6 +24,9 @@ if (isset($_GET["dn"]) and $_GET["dn"]) {
     // $result = "dnrequired";// Deprecating this error in favor of displaying welcome screen instead
 }
 
+if (isset($_GET["editattributeresult"]) and $_GET["editattributeresult"]) {
+    $editattributeresult = $_GET["editattributeresult"];
+}
 if (isset($_GET["checkpasswordresult"]) and $_GET["checkpasswordresult"]) {
     $checkpasswordresult = $_GET["checkpasswordresult"];
 }
@@ -171,6 +174,7 @@ $smarty->assign("ldapExpirationDate", $ldapExpirationDate);
 
 $smarty->assign("edit_link", $edit_link);
 
+$smarty->assign("editattributeresult", $editattributeresult);
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
 $smarty->assign("accountunlockresult", $accountunlockresult);
