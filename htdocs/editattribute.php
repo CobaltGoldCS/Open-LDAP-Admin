@@ -6,7 +6,7 @@
  $dn = "";
  $result = "";
 
-if ( isset($_POST["attribute"]) and isset($_POST["dn"]) and isset($_POST["editField"]) ) {
+if ( isset($_POST["attribute"]) and isset($_POST["dn"]) and isset($_POST["editField"]) and $authenticated ) {
     
     require_once("../conf/config.inc.php");
     require_once("../lib/ldap.inc.php");
