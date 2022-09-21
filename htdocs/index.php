@@ -50,7 +50,6 @@ $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => 
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
 $smarty->assign('custom_css',$custom_css);
-$smarty->assign('attributes_map',$attributes_map);
 $smarty->assign('date_specifiers',$date_specifiers);
 if (is_array($datatables_page_length_choices)) $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
 $smarty->assign('datatables_page_length_choices', $datatables_page_length_choices);
@@ -69,6 +68,15 @@ $smarty->assign('use_searchlocked',$use_searchlocked);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
+
+# Assign attribute edit flags
+foreach ($admin_editable_attributes as $attribute) {
+    if (array_key_exists($attribute,$attributes_map)) { $attributes_map[$attribute]['admineditable'] = true; }
+}
+foreach ($user_editable_attributes as $attribute) {
+    if (array_key_exists($attribute,$attributes_map)) { $attributes_map[$attribute]['usereditable'] = true; }
+}
+$smarty->assign('attributes_map',$attributes_map);
 
 # Assign messages
 $smarty->assign('lang',$lang);

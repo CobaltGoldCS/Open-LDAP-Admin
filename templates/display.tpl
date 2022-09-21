@@ -36,6 +36,8 @@
                     {$attribute=$attributes_map.{$item}.attribute}
                     {$type=$attributes_map.{$item}.type}
                     {$faclass=$attributes_map.{$item}.faclass}
+                    {$admineditable=$attributes_map.{$item}.admineditable}
+                    {$usereditable=$attributes_map.{$item}.usereditable}
 
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
@@ -59,7 +61,9 @@
                             </td>
                             <td>
                             {foreach $attribute as $value}
+                                {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                                {/if}
                             {/foreach}
                             </td>
                         </tr>
