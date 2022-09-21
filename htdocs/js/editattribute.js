@@ -28,15 +28,34 @@ function editAttribute(tableRow, attribute) {
     tableRow.replaceChild(td, targetAttribute);// Replace DOM element with text input field
 
     /////////////////
+    // Building input validation error message within "td:nth-child(3)"
+    var message = document.createElement('div');
+    message.style = "font-size:10px;display:table-footer-group;";
+    message.className = "alert alert-warning";
+    message.role = "alert";
+
+    /////////////////
     // Building edit submit/save button within "td:nth-child(4)"
     var saveButton = document.createElement('button');// Create text input field <button></button>
     saveButton.id = "edit-"+attribute;
     saveButton.type = "submit";
     saveButton.style = "border:none;background:none;font-size:18px;";
     saveButton.className = "fa fad fa-save";
-    saveButton.onclick = function(){
-        form.action = "index.php?page=editattribute";
-        form.method = "post";
+    saveButton.onclick = function(event){
+        
+    /////////////////
+    // Input validation
+     validation = validateinput(attribute);
+        if (validation.validated) {
+            form.action = "index.php?page=editattribute";
+            form.method = "post";
+        } else {
+            event.preventDefault();// Disable default form submit action
+            input.style = "border:2px solid red;";
+            message.innerHTML = validation.message;
+            input.insertAdjacentElement('afterend',message);
+        }
+
     };
 
     /////////////////
@@ -77,3 +96,34 @@ function editAttribute(tableRow, attribute) {
     }
 
 }
+
+/////////////////
+// Custom input validation function
+function validateinput(attribute){          
+
+    selector = document.getElementById("edit-"+attribute);
+    
+    switch (attribute) {
+        case "mobile":
+            var regex = /^\d{10}$/;
+            validated = selector.value.match(regex) ? true : false;
+            message = "Input must be a 10-digit phone number without spaces, dashes, or parenthesis.";
+            break;
+        case "mail":
+            var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            validated = selector.value.match(regex) ? true : false;
+            message = "You have not entered a valid email address.";
+            break;
+        case "physicaldeliveryofficename":
+            var regex = /^\d{7}$/;
+            validated = selector.value.match(regex) ? true : false;
+            message = "Input must be a 7-digit ID.";
+            break;
+        default:
+            validated = true;
+            message = "";
+    }
+
+    return { validated, message };
+
+};
