@@ -1,3 +1,11 @@
+/*
+ * Javascript controlling input for attribute editing.
+ * Referenced in: display.tpl
+ *  
+ */
+
+/////////////////
+// Javascript function for controlling editing of attributes.
 function editAttribute(tableRow, attribute) {
 
     var targetAttribute = tableRow.querySelector("td:nth-child(3)");// Get attribute cell
@@ -23,7 +31,7 @@ function editAttribute(tableRow, attribute) {
     input.className = "form-control";
     input.value = ( targetAttribute.innerText.includes('Not defined') ) ? "" : targetAttribute.innerText;
     input.placeholder = ( targetAttribute.innerText.includes('Not defined') ) ? "" : targetAttribute.innerText;
-    input.style = "height:100%;"
+    input.style = "height:100%;";
     td.appendChild(input);// Wrap text input field in <td></td>
     tableRow.replaceChild(td, targetAttribute);// Replace DOM element with text input field
 
