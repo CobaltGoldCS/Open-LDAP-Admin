@@ -11,12 +11,17 @@ if ( isset($_POST["attribute"]) and isset($_POST["dn"]) and isset($_POST["editFi
     require_once("../conf/config.inc.php");
     require_once("../lib/ldap.inc.php");
 
+    // $user_editable_attributes = array_map(function($attributes_map) {return $attributes_map['usereditable'];}, $attributes_map);
+    // $admin_editable_attributes = array_map(function($attributes_map) {return $attributes_map['admineditable'];}, $attributes_map);
+    // print_r($user_editable_attributes);
+    // print_r($admin_editable_attributes);
+    
     $attribute = $_POST["attribute"];
     $dn = $_POST["dn"];
     $edits = $_POST["editField"];
-    echo "Attribute: $attribute <br>";
-    echo "Edits: $edits <br>";
-    echo "DN: $dn <br>";
+    // echo "Attribute: $attribute <br>";
+    // echo "Edits: $edits <br>";
+    // echo "DN: $dn <br>";
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
