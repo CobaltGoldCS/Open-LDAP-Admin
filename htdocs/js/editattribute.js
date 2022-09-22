@@ -38,7 +38,7 @@ function editAttribute(tableRow, attribute) {
     /////////////////
     // Building input validation error message within "td:nth-child(3)"
     var message = document.createElement('div');
-    message.style = "font-size:10px;display:table-footer-group;";
+    message.style = "font-size:10px;display:table-footer-group;width:inherit";
     message.className = "alert alert-warning";
     message.role = "alert";
 
@@ -60,7 +60,7 @@ function editAttribute(tableRow, attribute) {
             form.method = "post";
         } else {
             event.preventDefault();// Disable default form submit action
-            input.style = "border:2px solid red;";
+            input.style.border = "2px solid red";
             message.innerHTML = validation.message;
             input.insertAdjacentElement('afterend',message);
         }

@@ -47,7 +47,7 @@
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
                             </th>
-                            <th class="hidden-xs">
+                            <th class="hidden-xs" style="overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
                                 {$msg_label_{$item}}
                             </th>
                             <td>
