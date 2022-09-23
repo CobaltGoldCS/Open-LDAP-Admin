@@ -76,6 +76,7 @@
         </div>
 
         {* Display Account Status *}
+        {if $isadmin}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
@@ -126,6 +127,7 @@
 
             </div>
         </div>
+        {/if}
 
     </div>{* End Column 1 *}
     
@@ -200,6 +202,7 @@
                              <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
                          </div>
                      </div>
+                     {if $isadmin}
                      <div class="form-groupi row">
                          <div class="col-md-9"><p>{$msg_forcereset}</p></div>
                          <div class="col-md-3 text-right">
@@ -221,6 +224,7 @@
                              </div>
                          </div>
                      </div>
+                    {/if}
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
