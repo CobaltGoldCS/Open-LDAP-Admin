@@ -180,56 +180,56 @@
                 </p>
             </div>
 
-             <div class="panel-body">
+            <div class="panel-body">
 
-                 <form id="resetpassword" method="post" action="index.php?page=resetpassword">
-                     {if $resetpasswordresult eq 'passwordrequired'}
-                     <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordrefused'}
-                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordchanged'}
-                     <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
-                     {/if}
-                     {if $posthookresult}
-                     <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
-                     {/if}
-                     <input type="hidden" name="dn" value="{$dn}" />
-                     <div class="form-group">
-                         <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
-                         </div>
-                     </div>
-                     {if $isadmin}
-                     <div class="form-groupi row">
-                         <div class="col-md-9"><p>{$msg_forcereset}</p></div>
-                         <div class="col-md-3 text-right">
-                             <div class="btn-group" data-toggle="buttons">
-                                 <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
-                                 {if $resetpassword_reset_default}
-                                     <input type="radio" name="pwdreset" id="true" value="true" checked /> {$msg_true}
-                                 {else}
-                                     <input type="radio" name="pwdreset" id="true" value="true" /> {$msg_true}
-                                 {/if}
-                                 </label>
-                                 <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
-                                 {if !$resetpassword_reset_default}
-                                     <input type="radio" name="pwdreset" id="false" value="false" checked /> {$msg_false}
-                                 {else}
-                                     <input type="radio" name="pwdreset" id="false" value="false" /> {$msg_false}
-                                 {/if}
-                                 </label>
-                             </div>
-                         </div>
-                     </div>
+                <form id="resetpassword" method="post" action="index.php?page=resetpassword">
+                    {if $resetpasswordresult eq 'passwordrequired'}
+                    <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
                     {/if}
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-success">
-                             <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
-                         </button>
-                     </div>
+                    {if $resetpasswordresult eq 'passwordrefused'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
+                    {/if}
+                    {if $resetpasswordresult eq 'passwordchanged'}
+                    <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
+                    {/if}
+                    {if $posthookresult}
+                    <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                            <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
+                        </div>
+                    </div>
+                    {if $isadmin}
+                    <div class="form-groupi row">
+                        <div class="col-md-9"><p>{$msg_forcereset}</p></div>
+                        <div class="col-md-3 text-right">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
+                                {if $resetpassword_reset_default}
+                                    <input type="radio" name="pwdreset" id="true" value="true" checked /> {$msg_true}
+                                {else}
+                                    <input type="radio" name="pwdreset" id="true" value="true" /> {$msg_true}
+                                {/if}
+                                </label>
+                                <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
+                                {if !$resetpassword_reset_default}
+                                    <input type="radio" name="pwdreset" id="false" value="false" checked /> {$msg_false}
+                                {else}
+                                    <input type="radio" name="pwdreset" id="false" value="false" /> {$msg_false}
+                                {/if}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
