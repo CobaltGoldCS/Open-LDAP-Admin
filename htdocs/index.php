@@ -125,6 +125,7 @@ if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "display"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "display"; }
 if ( $page === "unlockaccount" and (!$use_unlockaccount or !$isadmin) ) { $page = "display"; }
 if ( $page === "search" and !$isadmin ) { $page = "display"; }
+if ( $page === "newaccount" and !$isadmin ) { $page = "display"; }
 if ( $page === "searchlocked" and (!$use_searchlocked or !$isadmin) ) { $page = "display"; }
 if ( $page === "searchexpired" and (!$use_searchexpired or !$isadmin) ) { $page = "display"; }
 if ( $page === "searchwillexpire" and (!$use_searchwillexpire or !$isadmin) ) { $page = "display"; }

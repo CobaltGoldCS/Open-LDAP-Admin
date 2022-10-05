@@ -10,6 +10,7 @@
 <script src="vendor/chosen/chosen.jquery.min.js"></script>
 <script src="js/functions.js"></script>
 <script src="js/editattribute.js"></script>
+<script src="js/newaccount.js"></script>
 
 {literal}
   <script>
