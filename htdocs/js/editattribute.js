@@ -51,21 +51,21 @@ function editAttribute(tableRow, attribute) {
     saveButton.className = "fa fad fa-save";
     saveButton.onclick = function(event){
         
-    /////////////////
-    // Input validation
-    selector = document.getElementById("edit-"+attribute);
-    validation = EditAttributeValidate(attribute,selector);
-        if (validation.validated) {
-            form.action = "index.php?page=editattribute";
-            form.method = "post";
-        } else {
-            event.preventDefault();// Disable default form submit action
-            input.style.border = "2px solid red";
-            message.innerHTML = validation.message;
-            input.insertAdjacentElement('afterend',message);
-        }
+        /////////////////
+        // Input validation
+        selector = document.getElementById("edit-"+attribute);
+        validation = EditAttributeValidate(attribute,selector);
+            if (validation.validated) {
+                form.action = "index.php?page=editattribute";
+                form.method = "post";
+            } else {
+                event.preventDefault();// Disable default form submit action
+                input.style.border = "2px solid red";
+                message.innerHTML = validation.message;
+                input.insertAdjacentElement('afterend',message);
+            }
 
-    };
+        };
 
     /////////////////
     // Building edit cancel button within "td:nth-child(4)"

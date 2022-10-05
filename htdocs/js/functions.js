@@ -4,7 +4,7 @@
 
 /////////////////
 // Custom input validation function
-// Expects an LDAP 'attribute' as a string.
+// Expects an LDAP 'attribute' as a string and a DOM selector.
 function EditAttributeValidate(attribute,selector){          
 
     switch (attribute) {
