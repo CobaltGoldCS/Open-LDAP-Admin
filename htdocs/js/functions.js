@@ -23,6 +23,18 @@ function EditAttributeValidate(attribute,selector){
             validated = selector.value.match(regex) ? true : false;
             message = "Input must be a 7-digit ID.";
             break;
+        case "displayname":
+            validated = !isEmpty(selector.value) ? true : false;
+            message = "Field cannot be blank.";
+            break;
+        case "sn":
+            validated = !isEmpty(selector.value) ? true : false;
+            message = "Field cannot be blank.";
+            break;
+        case "givenname":
+            validated = !isEmpty(selector.value) ? true : false;
+            message = "Field cannot be blank.";
+            break;
         default:
             validated = true;
             message = "";
