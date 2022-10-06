@@ -14,9 +14,10 @@
                 </p>
             </div>
 
-            <div class="panel-body">
-                <select id="org_unit" name="org_unit" class="form-control">
-                    {foreach $org_tree as $ou} 
+            <div class="panel-body" id="org-unit-selection">
+                <select id="org_unit" name="org_unit" class="form-control select2-org_unit">
+                    <option value="" selected disabled hidden>Choose an Organizational Unit</option>
+                    {foreach $org_tree as $ou}
                         <option value="{$ou.dn}">{$ou.option}</option>
                     {/foreach}
                 </select>
@@ -34,7 +35,7 @@
             </div>
 
             <div class="panel-body">
-                <select id="ldap_groups" name="ldap_groups[]" data-placeholder="Choose some groups..." class="form-control chosen-select" multiple>
+                <select id="ldap_groups" name="ldap_groups[]" data-placeholder="Choose some groups..." class="form-control select2-groups" multiple>
                     {foreach $ldap_groups as $group}{if $group.dn}
                         <option value="{$group.dn}">{$group.option}</option>
                     {/if}{/foreach}

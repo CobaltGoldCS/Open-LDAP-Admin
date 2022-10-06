@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/datatables/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="vendor/chosen/chosen.min.css"/>
     <link rel="stylesheet" type="text/css" href="vendor/select2/css/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="vendor/select2/css/select2-bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/service-desk.css" />
