@@ -3,7 +3,54 @@
 {/if}
 <form class="form-row" id="newaccount">
 
-    <div class="col-md-5">{* Column 1 *}
+    <div class="display col-md-7">{* Column 1 *}
+
+        {* Attribute Entry *}
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <p class="panel-title"><i class="fa fa-fw fa-user"></i>{$msg_newaccountdetails}</p>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                    {foreach $card_items as $item}
+                    {$attribute=$attributes_map.{$item}.attribute}
+                    {$type=$attributes_map.{$item}.type}
+                    {$faclass=$attributes_map.{$item}.faclass}
+                    {$admineditable=$attributes_map.{$item}.admineditable}
+                    {$usereditable=$attributes_map.{$item}.usereditable}
+
+                    {* Programming Note: between <tr></tr> tag gets overwritten by editattribute.js upon click event *}
+                     <tr id="attribute-{$attribute}">
+                        <th class="text-center">
+                                <i class="fa fa-fw fa-{$faclass}"></i>
+                            </th>
+                            <th class="hidden-xs" style="overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+                                {$msg_label_{$item}}
+                            </th>
+                            <td style="padding: 4px;">
+                                <div class="input-group" style="width:100%;">
+                                {* <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span> *}
+                                    <input type="text" name="{$attribute}" id="{$attribute}" class="form-control" style="border-radius:3px;" placeholder="{$attribute}" />
+                                </div>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group text-center">
+            <button type="submit" id="submit-account" class="btn btn-success" style="width:100%;height:60px;" onclick="return newaccount();">
+                <i class="fa fa-fw fa-check-square-o"></i> {$msg_newaccountconfirm}
+            </button>
+        </div>
+
+    </div>{* End Column 1 *}
+
+    <div class="col-md-5">{* Column 2 *}
 
         {* Org Unit Selection *}    
         <div class="panel panel-info">
@@ -67,53 +114,6 @@
                         </div>
                     </div>
             </div>
-        </div>
-
-    </div>{* End Column 1 *}
-
-    <div class="display col-md-7">{* Column 2 *}
-
-        {* Attribute Entry *}
-        <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title"><i class="fa fa-fw fa-user"></i>{$msg_newaccountdetails}</p>
-            </div>
-
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                    {foreach $card_items as $item}
-                    {$attribute=$attributes_map.{$item}.attribute}
-                    {$type=$attributes_map.{$item}.type}
-                    {$faclass=$attributes_map.{$item}.faclass}
-                    {$admineditable=$attributes_map.{$item}.admineditable}
-                    {$usereditable=$attributes_map.{$item}.usereditable}
-
-                    {* Programming Note: between <tr></tr> tag gets overwritten by editattribute.js upon click event *}
-                     <tr id="attribute-{$attribute}">
-                        <th class="text-center">
-                                <i class="fa fa-fw fa-{$faclass}"></i>
-                            </th>
-                            <th class="hidden-xs" style="overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
-                                {$msg_label_{$item}}
-                            </th>
-                            <td style="padding: 4px;">
-                                <div class="input-group" style="width:100%;">
-                                {* <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span> *}
-                                    <input type="text" name="{$attribute}" id="{$attribute}" class="form-control" style="border-radius:3px;" placeholder="{$attribute}" />
-                                </div>
-                            </td>
-                        </tr>
-                    {/foreach}
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="form-group text-center">
-            <button type="submit" id="submit-account" class="btn btn-success" style="width:100%;height:60px;" onclick="return newaccount();">
-                <i class="fa fa-fw fa-check-square-o"></i> {$msg_newaccountconfirm}
-            </button>
         </div>
 
     </div>{* End Column 2 *}
