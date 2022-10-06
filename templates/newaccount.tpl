@@ -1,7 +1,7 @@
 {if isset($createaccountresult) and $createaccountresult neq 'success'}
     <div class="alert alert-danger" style="margin:15px;"><i class="fa fa-fw fa-exclamation-triangle"></i> LDAP Error: {$createaccountresult}.</div>
 {/if}
-<form class="form-row" id="newaccount">
+<form class="form-row" id="newaccount" autocomplete="off">
 
     <div class="display col-md-7">{* Column 1 *}
 
