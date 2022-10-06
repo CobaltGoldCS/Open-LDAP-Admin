@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/datatables/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/chosen/chosen.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/service-desk.css" />
 {if $custom_css}
     <link rel="stylesheet" type="text/css" href="{$custom_css}" />

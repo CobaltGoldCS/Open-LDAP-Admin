@@ -7,8 +7,14 @@
 <script src="vendor/jquery/js/jquery-1.10.2.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendor/datatables/datatables.min.js"></script>
+<script src="vendor/chosen/chosen.jquery.min.js"></script>
+<script src="js/functions.js"></script>
+<script src="js/editattribute.js"></script>
 
 {literal}
+  <script>
+    $(".chosen-select").chosen();
+  </script>
     <script type="text/javascript">
       $(document).ready( function() {
 {/literal}
