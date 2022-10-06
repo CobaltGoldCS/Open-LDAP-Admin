@@ -37,10 +37,7 @@ function editAttribute(tableRow, attribute) {
 
     /////////////////
     // Building input validation error message within "td:nth-child(3)"
-    var message = document.createElement('div');
-    message.style = "font-size:10px;display:table-footer-group;width:inherit";
-    message.className = "alert alert-warning";
-    message.role = "alert";
+    var message = alertMsg("message-"+attribute);
 
     /////////////////
     // Building edit submit/save button within "td:nth-child(4)"

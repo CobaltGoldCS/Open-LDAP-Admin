@@ -40,7 +40,6 @@
             </li>
             {/if}
           </ul>
-          {if $ldap_authentication}
           {if $ldap_authentication and isset($authenticated)}
           <form class="navbar-form navbar-right" action="index.php?page=login" method="post">
             <div class="form-group">
@@ -50,7 +49,16 @@
             </div>
           </form>
           {/if}
-          {if $isadmin }
+          {if $isadmin and $page neq 'newaccount'}
+            <form class="navbar-form navbar-right" action="index.php?page=newaccount" method="post">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success" name="newaccount" value="yes">
+                  <i class="fa fa-fw fa-user"></i> {$msg_newaccount}
+                </button>
+              </div>
+            </form>
+          {/if}
+          {if $isadmin}
             <form class="navbar-form navbar-right" role="search" action="index.php?page=search" method="post">
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="{$msg_search}" name="search" value="{$search}" />

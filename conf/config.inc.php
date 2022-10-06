@@ -102,6 +102,10 @@ $display_password_expiration_date = true;
 $user_editable_attributes = $display_items;
 $admin_editable_attributes = $display_items;
 
+# User Creation
+$user_creation_attributes = array('');// Additional attributes specified during user creation
+$ldap_group_base = $ldap_base;// LDAP group base OU for user creation
+
 # Features
 $use_checkpassword = true;
 $use_resetpassword = true;
