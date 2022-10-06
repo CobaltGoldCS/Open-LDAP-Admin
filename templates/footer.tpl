@@ -8,6 +8,7 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendor/datatables/datatables.min.js"></script>
 <script src="vendor/chosen/chosen.jquery.min.js"></script>
+<script src="vendor/select2/js/select2.full.min.js"></script>
 <script src="js/functions.js"></script>
 <script src="js/editattribute.js"></script>
 <script src="js/newaccount.js"></script>

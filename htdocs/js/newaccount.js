@@ -5,6 +5,21 @@
  */
 
 /////////////////
+// Select2 JQuery OnLoad Classes for selection boxes.
+$(document).ready(function() {
+
+    // Org Unit selection
+    $('.select2-org_unit').select2({
+        theme: "bootstrap4"
+    });
+
+    // Groups selection
+    $('.select2-groups').select2({
+        theme: "bootstrap4"
+    });
+});
+
+/////////////////
 // Javascript function for controlling creation of new accounts.
 function newaccount() {
 
