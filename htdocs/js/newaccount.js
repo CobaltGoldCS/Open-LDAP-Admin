@@ -29,6 +29,7 @@ function newaccount() {
     // Input validation array for all attributes in form
     var validation_array = [];
     var password_check = false;
+    var org_check = false;
 
     attributes = document.getElementById("newaccount").elements;// Get form elements
     for (var i = 0, iLen = attributes.length; i < iLen; i++) {
@@ -63,8 +64,8 @@ function newaccount() {
 
     /////////////////
     // Password input validation
-    err_msg = document.getElementById("password-verif");// Get any previous password error messages
-    if(err_msg) { err_msg.remove(); }// If previous password error message exists, remove it
+    passwd_err_msg = document.getElementById("password-verif");// Get any previous password error messages
+    if(passwd_err_msg) { passwd_err_msg.remove(); }// If previous password error message exists, remove it
 
     if ( attributes.newpassword.value ===  attributes.confirmpassword.value && !isEmpty(attributes.newpassword.value) ) {
         password_check = true;
@@ -81,8 +82,24 @@ function newaccount() {
     } 
 
     /////////////////
+    // Org Unit validation
+    org_err_msg = document.getElementById("org-verif");// Get any previous password error messages
+    org_panel = document.getElementById("org-unit-selection")
+    if(org_err_msg) { org_err_msg.remove(); }// If previous password error message exists, remove it
+
+    if ( !isEmpty(attributes.org_unit.value) ) {
+        org_check = true;
+        org_panel.style.border = "none";
+    }
+    else if (org_panel.style.border != "2px solid red") {
+        message = alertMsg("org-verif","You must choose an Organizational Unit.");
+        org_panel.style.border = "2px solid red";
+        attributes.org_unit.insertAdjacentElement('afterend',message);
+    } 
+
+    /////////////////
     // Final form validation action
-    if (validation_array.every(Boolean) && password_check) {// If all validation conditions are met, do the POST
+    if (validation_array.every(Boolean) && password_check && org_check) {// If all validation conditions are met, do the POST
         form.action = "index.php?page=newaccount";
         form.method = "post";
         return true;
