@@ -9,7 +9,7 @@ function EditAttributeValidate(attribute,selector){
 
     switch (attribute) {
         case "mobile":
-            var regex = /^\d{10}$/;
+            var regex = /^$|\d{10}]$/;
             validated = selector.value.match(regex) ? true : false;
             message = "Input must be a 10-digit phone number without spaces, dashes, or parenthesis.";
             break;
