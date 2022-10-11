@@ -224,10 +224,10 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
                 ldap_close($ldap); //Close connection
     
             }
-        }
+        }// END if($ldap)
  
 
-    }
+    }// END POST actions
 
 
     
