@@ -95,25 +95,50 @@
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
-                    <i class="fa fa-fw fa-check-circle"></i>
+                    <i class="fa fa-fw fa-lock"></i>
                     {$msg_setpassword}
                 </p>
             </div>
 
             <div class="panel-body">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                            <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="{$msg_passwordrequired}" />
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                        <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="{$msg_passwordrequired}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-check"></i></span>
+                        <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="{$msg_confirmpassword}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8"><p>{$msg_forcereset}</p></div>
+                    <div class="text-right" style="padding-right:none;">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
+                            {if $resetpassword_reset_default}
+                                <input type="radio" name="pwdreset" id="true" value="true" checked /> {$msg_true}
+                            {else}
+                                <input type="radio" name="pwdreset" id="true" value="true" /> {$msg_true}
+                            {/if}
+                            </label>
+                            <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
+                            {if !$resetpassword_reset_default}
+                                <input type="radio" name="pwdreset" id="false" value="false" checked /> {$msg_false}
+                            {else}
+                                <input type="radio" name="pwdreset" id="false" value="false" /> {$msg_false}
+                            {/if}
+                            </label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-fw fa-check"></i></span>
-                            <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="{$msg_confirmpassword}" />
-                        </div>
-                    </div>
+                </div>
+            
             </div>
+
         </div>
 
     </div>{* End Column 2 *}
