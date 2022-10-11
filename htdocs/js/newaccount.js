@@ -41,10 +41,10 @@ function newaccount() {
         /////////////////
         // Building input validation error message below text input fields
         var message = alertMsg("message-"+attribute);
-        
+
         /////////////////
         // Input validation
-        if (selector != null) {
+        if (selector != null && selector.id != 'newpassword' && selector.id != 'confirmpassword') {
             validation = EditAttributeValidate(attribute,selector);// Do the validation
             validation_array.push(validation.validated);// Append validation state to array
             err_msg = document.getElementById("message-"+attribute);// Get any previous error messages
