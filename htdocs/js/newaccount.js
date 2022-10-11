@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     // Groups selection
     $('.select2-groups').select2({
-        theme: "bootstrap4"
+        // theme: "bootstrap4"
     });
 });
 
