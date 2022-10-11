@@ -23,7 +23,9 @@ function EditAttributeValidate(attribute,selector){
             validated = selector.value.match(regex) ? true : false;
             message = "Input must be a 7-digit ID.";
             break;
+        case "org_unit":
             validated = !isEmpty(selector.value) ? true : false;
+            message = "Please choose an Organizational Unit.";
             break;
         default:
             validated = !isEmpty(selector.value) ? true : false;
