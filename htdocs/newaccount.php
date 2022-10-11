@@ -18,7 +18,7 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
     require_once("../conf/config.inc.php");
     require_once("../lib/ldap.inc.php");
 
-    $required_attributes = array('firstname','lastname','displayname','username');// Attributes required for user creation
+    $required_attributes = array('firstname','lastname');// Attributes required for user creation
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
