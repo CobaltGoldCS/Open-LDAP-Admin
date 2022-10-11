@@ -196,18 +196,7 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
                 error_log("LDAP - User creation error $errno  (".ldap_error($ldap).")");
             } else {// Else continue to steps 2 & 3
     
-                /* STEP 2: Set the user password */
-                $encodedPass = array('unicodepwd' => encodePassword($pwdtxt));
-                if(ldap_mod_replace ($ldap, $dn, $encodedPass)){ 
-                    // echo "Successfully created new user.<br>";
-                    $callback .= '&createaccount=success';
-                } else {
-                    // echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
-                    error_log("LDAP - User creation error on password change (".ldap_error($ldap).")");
-                    $callback .= '&createaccount=pwderror';
-                }
-
-                /* STEP 3: Add the user to any groups */
+                /* STEP 2: Add the user to any groups */
                 foreach( $groups as $group ) {
                     $member['member'] = $dn;// User's DN is added to group's 'member' array
                     if(ldap_mod_add($ldap, $group, $member)) {
@@ -218,6 +207,18 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
                         $callback .= '&groupadd=adderror';
                     }
                 }
+                
+                /* STEP 3: Set the user password */
+                $encodedPass = array('unicodepwd' => encodePassword($pwdtxt));
+                if(ldap_mod_replace ($ldap, $dn, $encodedPass)){ 
+                    // echo "Successfully created new user.<br>";
+                    $callback .= '&createaccount=success';
+                } else {
+                    // echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
+                    error_log("LDAP - User creation error on password change (".ldap_error($ldap).")");
+                    $callback .= '&createaccount=pwderror';
+                }
+
                 $success_url .= $callback;// Append callback(s)
                 header('Location: '.$success_url);//Do the final redirect with callbacks appended
                 ldap_close($ldap); //Close connection
