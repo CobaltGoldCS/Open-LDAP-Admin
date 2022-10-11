@@ -10,9 +10,13 @@ $authenticated = $_SESSION["authenticated"];
 $isadmin = $_SESSION['isadmin'];
 if ($authenticated and $isadmin) {// Do basic authentication check before loading page PHP
 
-    if (isset($_GET["createaccountresult"]) and $_GET["createaccountresult"]) {
-        $createaccountresult = $_GET["createaccountresult"];
-        $smarty->assign("createaccountresult", $createaccountresult);
+    if (isset($_GET["createaccount"]) and $_GET["createaccount"]) {
+        $createaccount = $_GET["createaccount"];
+        $smarty->assign("createaccount", $createaccount);
+    }
+    if (isset($_GET["groupadd"]) and $_GET["groupadd"]) {
+        $groupadd = $_GET["groupadd"];
+        $smarty->assign("groupadd", $groupadd);
     }
 
     require_once("../conf/config.inc.php");
