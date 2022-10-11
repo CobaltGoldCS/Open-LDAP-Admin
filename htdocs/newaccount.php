@@ -146,24 +146,81 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         $smarty->assign("entry", $entry[0]);
         $smarty->assign("card_items", $creation_attributes);
 
-    }
+    }// END if($ldap)
 
 
 
-    // Do the user creation on POST
-    if (isset($_POST["givenname"]) and isset($_POST["sn"]) and isset($_POST["displayname"]) and isset($_POST["samaccountname"])) {
-        // foreach($_POST as $key => $value) {
-        //     echo "POST parameter '$key' has '$value' <br>";
-        // }
-        $groups = $_POST["ldap_groups"];
-        $ou_dn = $_POST["org_unit"];
-        $newpassword = $_POST["newpassword"];
+    /*
+    *   POST Actions
+    */
+    if (isset($_POST["givenname"]) and isset($_POST["sn"]) and isset($_POST["ldap_groups"]) and isset($_POST["org_unit"]) and isset($_POST["newpassword"])) {
 
-        if ($groups){
-            // foreach ($groups as $g){echo $g.'<br />';}
+        // POST values to LDAP attribute conversion
+        $ou = $_POST["org_unit"];// Organizational Unit
+        $dn = "CN=".$_POST['givenname']." ".$_POST['sn'].",".$ou;// Distinguished Name
+        $name = $_POST['givenname']." ".$_POST['sn'];// First Name
+        $groups = $_POST["ldap_groups"];// Array of group DN's
+        $newpassword = $_POST["newpassword"];// Password (placeholder)
+    
+        $ldaprecord = array();// Preallocate
+
+        // Use the rest of the POST values as definied by the $creation_attribute array
+        $remaining_attributes = array_slice($_POST, 0, sizeof($creation_attributes));// Trim off 'org_unit', 'ldap_groups', 'newpassword', 'confirmpassword' and 'pwdreset' which are non-LDAP attributes
+        foreach($remaining_attributes as $key => $value) {
+            $ldaprecord[$key] = $value;
         }
+
+        // Build the rest of the LDAP record with minimum required attributes unless specified by user config
+        $ldaprecord['cn'] = isset($_POST['cn']) ? $_POST['cn'] : $_POST['givenname']." ".$_POST['sn'];
+        $ldaprecord['displayname'] = isset($_POST['displayname']) ? $_POST['displayname'] : $name;
+        $ldaprecord['name'] = isset($_POST['name']) ? $_POST['name'] : $name;
+        // $ldaprecord['userPassword'] =  '{MD5}' . base64_encode(pack('H*',md5($pwdtxt)));
         
-        ldapAddUser($ldap, $ou_dn, $_POST["givenname"], $_POST["sn"], $_POST["samaccountname"], $newpassword, $_POST["displayname"], $_POST["mail"]);
+        $ldaprecord['objectclass'] = array("top","person","organizationalPerson","user");
+        $ldaprecord["useraccountcontrol"] = "544";//544 - Account enabled, require password change
+    
+        if ($ldap) {
+    
+            $result = ldap_add($ldap, $dn, $ldaprecord);
+            $errno = ldap_errno($ldap);
+            $success_url = 'index.php?page=display&dn='.$dn;//Redirect page to display new account on success
+    
+            /* STEP 1: Create the account */
+            if ( $errno ) {// If there is an error, stop here
+                // echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
+                header('Location: index.php?page=newaccount&createaccount='.ldap_error($ldap));
+                error_log("LDAP - User creation error $errno  (".ldap_error($ldap).")");
+            } else {// Else continue to steps 2 & 3
+    
+                /* STEP 2: Set the user password */
+                $encodedPass = array('unicodepwd' => encodePassword($pwdtxt));
+                if(ldap_mod_replace ($ldap, $dn, $encodedPass)){ 
+                    // echo "Successfully created new user.<br>";
+                    $callback .= '&createaccount=success';
+                } else {
+                    // echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
+                    error_log("LDAP - User creation error on password change (".ldap_error($ldap).")");
+                    $callback .= '&createaccount=pwderror';
+                }
+
+                /* STEP 3: Add the user to any groups */
+                foreach( $groups as $group ) {
+                    $member['member'] = $dn;// User's DN is added to group's 'member' array
+                    if(ldap_mod_add($ldap, $group, $member)) {
+                        $callback .= '&groupadd=success';
+                    } else {
+                        // echo "Failed to add user to group (".ldap_error($ldap).")<br>";
+                        error_log("LDAP - Failed to add user to group (".ldap_error($ldap).")");
+                        $callback .= '&groupadd=adderror';
+                    }
+                }
+                $success_url .= $callback;// Append callback(s)
+                header('Location: '.$success_url);//Do the final redirect with callbacks appended
+                ldap_close($ldap); //Close connection
+    
+            }
+        }
+ 
 
     }
 
@@ -175,58 +232,12 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
 
 
 
-// LDAP new account creation method
-function ldapAddUser($ldap, $ou_dn, $firstName, $lastName, $username, $pwdtxt, $displayname, $email){
-    
-    $dn = "CN=$firstName $lastName,".$ou_dn;// Distinguished Name
-
-    $ldaprecord['cn'] = $firstName." ".$lastName;
-    $ldaprecord['displayName'] = isset($displayname) ? $displayname : $firstName." ".$lastName;
-    $ldaprecord['name'] = $firstName." ".$lastName;
-    $ldaprecord['givenName'] = $firstName;
-    $ldaprecord['sn'] = $lastName;
-    $ldaprecord['mail'] = $email;
-    $ldaprecord['sAMAccountName'] = $username;
-    // $ldaprecord['userPassword'] =  '{MD5}' . base64_encode(pack('H*',md5($pwdtxt)));
-    // foreach($ldaprecord as $key => $value) {
-    //     echo "LDAP attr '$key' has '$value' <br>";
-    // }
-
-    // LDAP default properties
-    $ldaprecord['objectclass'] = array("top","person","organizationalPerson","user");
-    $ldaprecord["UserAccountControl"] = "544";//544 - Account enabled, require password change
-    // print_r($ldaprecord);
-
-    if ($ldap) {
-
-        $result = ldap_add($ldap, $dn, $ldaprecord);
-        $errno = ldap_errno($ldap);
-
-        if ( $errno ) {// If there is an error, stop here
-            // header('Location: index.php?page=newaccount&createaccountresult='.ldap_error($ldap));
-            // error_log("LDAP - User creation error $errno  (".ldap_error($ldap).")");
-            echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
-        } else {
-
-            $encodedPass = array('unicodepwd' => encodePassword($pwdtxt));
-            if(ldap_mod_replace ($ldap, $dn, $encodedPass)){ 
-                echo "Successfully created new user.<br>";
-                // header('Location: index.php?page=display&dn='.$dn.'&createaccountresult=success');            
-            }else{
-                echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
-                error_log("LDAP - User creation error on password change (".ldap_error($ldap).")");
-            }
-            ldap_close($ldap); //Close connection
-
-        }
-    }
-
-}
-
 // Sort options custom method
 function sortByOption($a, $b) {
     return strcmp($a['option'], $b['option']);
 }
+
+
 
 // Create unicode password
 function encodePassword($password) {
