@@ -224,7 +224,7 @@
                             </div>
                         </div>
                     </div>
-                {/if}
+                    {/if}
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
