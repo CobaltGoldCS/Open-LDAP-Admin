@@ -75,6 +75,7 @@ if ($result === "") {
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
         $attributes[] = "pwdPolicySubentry";
+        $attributes[] = "memberOf";
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
@@ -104,6 +105,14 @@ if ($result === "") {
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
+        # Group Membership
+        $group_dns = $entry[0]['memberof'];
+        for ($i = 0; $i < sizeof($group_dns); $i++) {
+            $groups[$i]['dn'] = $group_dns[$i];
+            $groups[$i]['arr'] = ldap_explode_dn($group_dns[$i],2);
+            $groups[$i]['name'] = $groups[$i]['arr'][0];
+        }
+        
         # Search user active password policy
         $pwdPolicy = "";
         if (isset($entry[0]['pwdpolicysubentry'][0])) {
@@ -168,6 +177,7 @@ if ($result === "") {
 $smarty->assign("entry", $entry[0]);
 $smarty->assign("dn", $dn);
 $smarty->assign("ou",$ou);
+$smarty->assign("groups",$groups);
 
 $smarty->assign("card_title", $display_title);
 $smarty->assign("card_items", $display_items);

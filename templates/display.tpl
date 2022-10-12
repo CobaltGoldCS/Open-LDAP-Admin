@@ -156,6 +156,27 @@
                 </div>
             </div>
         {/if}
+
+        {* Group Membership *}
+        {if $isadmin}
+            <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <p class="panel-title">
+                    <i class="fa fa-fw fa-group"></i>
+                    {$msg_groupmembership}
+                </p>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-striped table-hover">
+                    {foreach from=$groups item=group key=key}
+                    <tr><td class="col-md-6"><b>{$key+1}.</b> {$group.name}</td></tr>
+                    {/foreach}
+                </table>
+            </div>
+            </div>
+        {/if}
+    
         {if $use_checkpassword and $isadmin and $displayname neq $entry.cn.0}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
