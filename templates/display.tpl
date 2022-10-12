@@ -1,5 +1,3 @@
-<script src="js/display.js"></script>
-
 {if empty($entry) or $entry.count eq 0} {* If there are no entries to be displayed, show welcome page *}
 <a href="index.php">
     <img src="{$logo}" alt="{$msg_title}" class="logo img-responsive center-block" />
@@ -349,3 +347,6 @@
    </div>{* End Column 2 *}
 </div>
 {/if}
+
+{* Page specific JS *}
+<script src="js/display.js"></script>

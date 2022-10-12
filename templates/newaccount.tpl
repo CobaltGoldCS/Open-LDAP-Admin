@@ -1,5 +1,3 @@
-<script src="js/newaccount.js"></script>
-
 {if isset($createaccountresult) and $createaccountresult neq 'success'}
     <div class="alert alert-danger" style="margin:15px;"><i class="fa fa-fw fa-exclamation-triangle"></i> LDAP Error: {$createaccountresult}.</div>
 {/if}
@@ -146,3 +144,6 @@
     </div>{* End Column 2 *}
     
 </form>
+
+{* Page specific JS *}
+<script src="js/newaccount.js"></script>
