@@ -135,6 +135,27 @@
     
     <div class="col-md-6">{* Column 2 *}
 
+        {* Organizational Unit *}
+        {if $isadmin}
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    <p class="panel-title">
+                    <i class="fa fa-fw fa-{$attributes_map.{'organizationalunit'}.faclass}"></i>
+                        {$msg_orgunits}
+                    </p>
+                </div>
+
+                <div class="panel-body">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <td class="col-md-6" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                            {$ou.humanreadable}
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        {/if}
         {if $use_checkpassword and $isadmin and $displayname neq $entry.cn.0}
         <div class="panel panel-info">
             <div class="panel-heading text-center">

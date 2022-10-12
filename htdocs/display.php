@@ -24,6 +24,12 @@ if (isset($_GET["dn"]) and $_GET["dn"]) {
     // $result = "dnrequired";// Deprecating this error in favor of displaying welcome screen instead
 }
 
+# Org Unit
+$dn_explode = array_reverse(ldap_explode_dn($dn,2));// Explode DN
+$ou = array();// Preallocate
+$ou['ou_arr'] = array_slice($dn_explode, 0, sizeof($dn_explode) - 2);// Slice out domain part
+$ou['humanreadable'] = implode(" / ",$ou['ou_arr']);// Build human readable format
+
 if (isset($_GET["editattributeresult"]) and $_GET["editattributeresult"]) {
     $editattributeresult = $_GET["editattributeresult"];
 }
@@ -161,6 +167,7 @@ if ($result === "") {
 
 $smarty->assign("entry", $entry[0]);
 $smarty->assign("dn", $dn);
+$smarty->assign("ou",$ou);
 
 $smarty->assign("card_title", $display_title);
 $smarty->assign("card_items", $display_items);
