@@ -111,7 +111,7 @@ function newaccount() {
 // Get form selector
 form = document.getElementById("newaccount");
 
-attributes = document.getElementById("newaccount").elements;// Get all form elements on page load
+attributes = form.elements;// Get all form elements on page load
 for (var i = 0, iLen = attributes.length; i < iLen; i++) {
     var attribute = attributes[i].name;
 }
