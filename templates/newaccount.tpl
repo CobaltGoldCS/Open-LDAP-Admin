@@ -44,12 +44,6 @@
             </div>
         </div>
         
-        <div class="form-group text-center">
-            <button type="submit" id="submit-account" class="btn btn-success" style="width:100%;height:60px;" onclick="return newaccount();">
-                <i class="fa fa-fw fa-check-square-o"></i> {$msg_newaccountconfirm}
-            </button>
-        </div>
-
     </div>{* End Column 1 *}
 
     <div class="col-md-5">{* Column 2 *}
@@ -142,7 +136,13 @@
             </div>
 
         </div>
-
+        
+        <div class="form-group text-center">
+            <button type="submit" id="submit-account" class="btn btn-success" style="width:100%;height:60px;" onclick="return newaccount();">
+                <i class="fa fa-fw fa-check-square-o"></i> {$msg_newaccountconfirm}
+            </button>
+        </div>
+        
     </div>{* End Column 2 *}
     
 </form>
