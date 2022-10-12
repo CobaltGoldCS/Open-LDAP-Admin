@@ -1,4 +1,4 @@
-<script src="js/editattribute.js"></script>
+<script src="js/display.js"></script>
 
 {if empty($entry) or $entry.count eq 0} {* If there are no entries to be displayed, show welcome page *}
 <a href="index.php">
