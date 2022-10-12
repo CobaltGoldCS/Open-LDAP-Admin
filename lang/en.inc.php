@@ -72,6 +72,7 @@ $messages['newaccount'] = "Create account";
 $messages['newaccountdetails'] = "New account details";
 $messages['newaccountconfirm'] = "Submit and create new account";
 $messages['noentriesfound'] = "No entries found";
+$messages['nogroupsassigned'] = "User is not assigned to any groups";
 $messages['notdefined'] = "Not defined";
 $messages['orgunits'] = "Organizational Unit";
 $messages['pager_all'] = "All";

@@ -167,9 +167,13 @@
 
             <div class="panel-body">
                 <table class="table table-striped table-hover">
-                    {foreach from=$groups item=group key=key}
-                    <tr><td class="col-md-6"><b>{$key+1}.</b> {$group.name}</td></tr>
-                    {/foreach}
+                    {if isset($groups)}
+                        {foreach from=$groups item=group key=key}
+                        <tr><td class="col-md-6"><b>{$key+1}.</b> {$group.name}</td></tr>
+                        {/foreach}
+                    {else}
+                        <tr><td class="col-md-6"><i style="color:gray;">{$msg_nogroupsassigned}</i></td></tr>
+                    {/if}
                 </table>
             </div>
             </div>
