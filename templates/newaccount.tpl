@@ -50,8 +50,8 @@
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
-                    <i class="fa fa-fw fa-sitemap"></i>
-                    {$msg_setorgunit}
+                    <i class="fa fa-fw fa-{$attributes_map.{'organizationalunit'}.faclass}"></i>
+                    {$msg_label_organizationalunit}
                 </p>
             </div>
 
@@ -71,7 +71,7 @@
             <div class="panel-heading text-center">
                 <p class="panel-title">
                     <i class="fa fa-fw fa-group"></i>
-                    {$msg_setgroup}
+                    {$msg_groupmembership}
                 </p>
             </div>
 

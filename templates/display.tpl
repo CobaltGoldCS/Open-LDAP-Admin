@@ -139,7 +139,7 @@
                 <div class="panel-heading text-center">
                     <p class="panel-title">
                     <i class="fa fa-fw fa-{$attributes_map.{'organizationalunit'}.faclass}"></i>
-                        {$msg_orgunits}
+                        {$msg_label_organizationalunit}
                     </p>
                 </div>
 
