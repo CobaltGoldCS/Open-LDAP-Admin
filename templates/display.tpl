@@ -56,7 +56,7 @@
                                 {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
                                 {/foreach}
                             {else}
-                                <i>{$msg_notdefined}</i><br />
+                                <i style="color:gray;">{$msg_notdefined}</i><br />
                             {/if}
                             </td>
                             <td>
@@ -107,7 +107,7 @@
                             {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
                             {/foreach}
                         {else}
-                            <i>{$msg_notdefined}</i><br />
+                            <i style="color:gray;">{$msg_notdefined}</i><br />
                         {/if}
                         </td>
                     </tr>
