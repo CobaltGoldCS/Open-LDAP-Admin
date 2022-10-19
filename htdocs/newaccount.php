@@ -59,11 +59,6 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         
         /* Query #2: Get Organizational Units */
         $ou_tree = get_org_units($ldap, $ldap_base);
-        $i=0;
-        for ($i=0; $i < sizeof($ou_tree); $i++) {// For each Organizational Unit
-            echo $ou_tree[$i]['option'];
-            $i++;
-        }
         $smarty->assign("org_tree", $ou_tree);
         
         /* Query #3: Get Groups Units */
