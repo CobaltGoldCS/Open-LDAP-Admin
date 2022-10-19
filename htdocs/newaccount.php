@@ -21,6 +21,7 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
 
     require_once("../conf/config.inc.php");
     require_once("../lib/ldap.inc.php");
+    require_once("functions.php");
 
     $required_attributes = array('firstname','lastname');// Attributes required for user creation
 
@@ -57,55 +58,13 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
 
         
         /* Query #2: Get Organizational Units */
-
-        $filter="(objectClass=organizationalunit)";
-        $justthese = array("dn", "ou"); 
-        $search = ldap_search($ldap, $ldap_base, $filter, $justthese);
-        $errno = ldap_errno($ldap);
-        // $orgUnits = ldap_get_entries($ldap, $search);
-        // print_r($orgUnits);
-        
-        if ( $errno ) {
-            $result = "ldaperror";
-            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
-        } else {
-
-            $orgUnits = ldap_get_entries($ldap, $search);// Query LDAP for full list of organizational units
-
-            /* Build LDAP Org Tree in the following example format:
-                Array (3):
-                0 => Array (3)
-                tree => Array (1)
-                    Alumni => Array (2)
-                    level => 2
-                    parent => "example"
-                dn => "OU=Alumni,DC=example,DC=org"
-                option => "Alumni"
-            */
-            $exploded_ous = array(); $ou_tree = array();
-            for ($i=0; $i < $orgUnits['count']; $i++) {// For each Organizational Unit
-                // echo $orgUnits[$i]["dn"]."<br>";
-                $exploded_ous = array_reverse(ldap_explode_dn($orgUnits[$i]['dn'],2));// Explode OU's ommitting "DN=" and "OU="
-                // print_r($exploded_ous);
-                for ($j=2; $j < $exploded_ous['count']; $j++) {// Create sub-key for each OU in tree, ignoring top-level ($j=2)
-                    $key = !isset($ou_tree[$i]['tree'][$exploded_ous[$j]]) ? $exploded_ous[$j] : $key."\0";// Handle situation in which key already exists by appending invisible character
-                    $ou_tree[$i]['tree'][$key]['level'] = $j;// Capture directory tree-level
-                    $ou_tree[$i]['tree'][$key]['parent'] = isset($exploded_ous[$j-1])?$exploded_ous[$j-1]:'';// Capture parent
-                }
-                $ou_tree[$i]['dn'] = $orgUnits[$i]['dn'];// Create key: 'dn' --Save the DN of the Organizational Unit
-                $ou_tree[$i]['option'] = implode(" / ",array_keys($ou_tree[$i]['tree']));// Create key: 'tree' --Create human-readable text fields to show in drop-down
-                // print_r($ou_tree[$i]);
-                // echo "<br>";
-            }
-            
-            // Sort Org Structure for better human readibility
-            usort($ou_tree, 'sortByOption');
-
-            $smarty->assign("org_tree", $ou_tree);
-            
+        $ou_tree = get_org_units($ldap, $ldap_base);
+        $i=0;
+        for ($i=0; $i < sizeof($ou_tree); $i++) {// For each Organizational Unit
+            echo $ou_tree[$i]['option'];
+            $i++;
         }
-        ldap_free_result($search);// End Query #2
-
+        $smarty->assign("org_tree", $ou_tree);
         
         /* Query #3: Get Groups Units */
 
@@ -234,20 +193,3 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
 } else {
     die("You are not allowed to use this resource.<br>Please access this page via index.php.");
 }// END Authentication Check
-
-
-
-// Sort options custom method
-function sortByOption($a, $b) {
-    return strcmp($a['option'], $b['option']);
-}
-
-
-
-// Create unicode password
-function encodePassword($password) {
-    $password="\"".$password."\"";
-    $encoded="";
-    for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password{$i}}\000";}
-    return $encoded;
-}

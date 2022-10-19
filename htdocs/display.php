@@ -58,6 +58,7 @@ if ($result === "") {
     require_once("../conf/config.inc.php");
     require_once("../lib/ldap.inc.php");
     require_once("../lib/date.inc.php");
+    require_once("functions.php");
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
