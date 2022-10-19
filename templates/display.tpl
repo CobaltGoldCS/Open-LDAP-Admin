@@ -7,6 +7,16 @@
 
 {else} {* Else display the entry *}
 
+    {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
+        {if $editattributeresult eq 'successfuledit'}
+            <div class="alert alert-success" id="editattributeresult"><i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}</div>
+        {else}
+            <div class="alert alert-warning" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
+        {/if}
+    {elseif $editattributeresult neq ''}
+        <div class="alert alert-danger" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> Error while editing attribute: {$editattributeresult}</div>
+    {/if}
+
 <div class="row">
     <div class="display col-md-6">{* Column 1 *}
 
@@ -20,15 +30,6 @@
             </div>
 
             <div class="panel-body">
-            {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
-                {if $editattributeresult eq 'successfuledit'}
-                    <div class="alert alert-success" id="editattributeresult"><i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}</div>
-                {else}
-                    <div class="alert alert-warning" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
-                {/if}
-            {elseif $editattributeresult neq ''}
-                <div class="alert alert-danger" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> Error: {$editattributeresult}</div>
-            {/if}
                 <form name="submitedits">
                     <div class="table-responsive">
                     <table class="table table-striped table-hover">
