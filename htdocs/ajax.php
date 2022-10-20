@@ -19,7 +19,7 @@ require_once("../conf/config.inc.php");
 require_once("../lib/ldap.inc.php");
 require_once("functions.php");
 
- # Store GET request as variable to control which PHP is executed in this script.
+# Store GET request as variable to control which PHP is executed in this script.
 if (isset($_GET["request"]) and $_GET["request"]) {
 
     $request = $_GET["request"];
