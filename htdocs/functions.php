@@ -57,6 +57,8 @@ function get_org_units($ldap, $ldap_base) {
             ldap_free_result($search);
 
         }
+    } else {
+        error_log("Error: an LDAP connection was not established.");
     }
     return $ou_tree;
 }
