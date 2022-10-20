@@ -126,7 +126,7 @@
                 </table>
                 </div>
 
-            </div>
+                </div>
         </div>
         {/if}
 
@@ -137,6 +137,7 @@
         {* Organizational Unit *}
         {if $isadmin}
             <div class="panel panel-info">
+                
                 <div class="panel-heading text-center">
                     <p class="panel-title">
                     <i class="fa fa-fw fa-{$attributes_map.{'organizationalunit'}.faclass}"></i>
@@ -144,15 +145,28 @@
                     </p>
                 </div>
 
-                <div class="panel-body">
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <td class="col-md-6" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                            {$ou.humanreadable}
-                        </td>
-                    </tr>
-                </table>
+                <div class="panel-body" id="org-unit-selection">
+
+                    <form name="editOU">
+
+                    <table class="table table-striped table-hover">
+                        <tr id="organizationalunit">
+                            <td class="col-md-6" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                {$ou.humanreadable}
+                            </td>
+                            <td class="col-md-1">
+                            {if ($isadmin and $admineditable) or $usereditable}
+                                <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editOrgUnit(document.getElementById('organizationalunit'),'org_unit')"></button>
+                            {/if}
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <input type="hidden" name="dn" value="{$dn}">
+                    </form>
+
                 </div>
+
             </div>
         {/if}
 

@@ -39,11 +39,45 @@ if ( isset($_POST["attribute"]) and isset($_POST["dn"]) and isset($_POST["editFi
             $result = "successfuledit";
         }
     }
+    $location = 'index.php?page=display&dn='.$dn.'&editattributeresult='.$result;
 
-} else {
+} 
+
+if ( isset($_POST["org_unit"]) and isset($_POST["dn"]) and $authenticated ) {
+    
+    require_once("../conf/config.inc.php");
+    require_once("../lib/ldap.inc.php");
+
+    $dn = $_POST["dn"];
+    $newOU = $_POST["org_unit"];
+
+    $tmp = ldap_explode_dn($dn,0);
+    $new_rdn = $tmp[0];
+
+    # Connect to LDAP
+    $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
+    $ldap = $ldap_connection[0];
+
+    # Do the modification
+    if ($ldap) {
+
+        $modification = ldap_rename_ext($ldap, $dn, $new_rdn, $newOU, true);
+        $errno = ldap_errno($ldap);
+
+        if ( $errno != 0 ) {// If there's an ldap error, stop here.
+            $result = "Could not move user: (".ldap_error($ldap).")";
+        } else {
+            $result = "successfuledit";
+        }
+
+    }
+    $location = 'index.php?page=display&dn='.$new_rdn.",".$newOU.'&editattributeresult='.$result;
+
+}
+
+else {
     $result = "POST attr was empty";
 }
 // die();
 
-$location = 'index.php?page=display&dn='.$dn.'&editattributeresult='.$result;
 header('Location: '.$location);
