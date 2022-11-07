@@ -60,7 +60,7 @@
                                 <i style="color:gray;">{$msg_notdefined}</i><br />
                             {/if}
                             </td>
-                            <td>
+                            <td class="text-right">
                             {foreach $attribute as $value}
                                 {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
@@ -154,7 +154,7 @@
                             <td class="col-md-6" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                 {$ou.humanreadable}
                             </td>
-                            <td class="col-md-1">
+                            <td class="text-right">
                             {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editOrgUnit(document.getElementById('organizationalunit'),'org_unit')"></button>
                             {/if}
