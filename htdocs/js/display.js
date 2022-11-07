@@ -126,21 +126,23 @@ function editOrgUnit(tableRow, attribute) {
     /////////////////
     // Building attribute user text input field within "td:nth-child(2)"
     var ouPicker = document.createElement('select');// Create text input field <button></button>
+    ouPicker.appendChild(document.createElement('option'));// Create blank <option></option> to be used as the placeholder option
     ouPicker.id = "edit-org_unit";
     ouPicker.name="org_unit";
     ouPicker.className = "form-control select2-org_unit";
     ouPicker.style = "width:100%;";
     targetAttribute.replaceWith(ouPicker);
-    $('.select2-org_unit').select2({
-        theme: "bootstrap4",
-        placeholder: 'Choose an Organizational Unit',
-        ajax: {
-            type: 'GET',
-            url: 'ajax.php',
-            dataType: 'json',
-            data: {request: 'org_units'},
-            delay: 50,
-        }
+    $.ajax({// Do AJAX call to get JSON data FIRST
+        type: 'GET',
+        url: 'ajax.php',
+        dataType: 'json',
+        data: {request: 'org_units'},
+    }).done(function (response) {// THEN add JSON response to Select2 Options
+        $('.select2-org_unit').select2({
+            theme: "bootstrap4",
+            placeholder: 'Choose an Organizational Unit',
+            data: response,
+        });
     });
 
     /////////////////

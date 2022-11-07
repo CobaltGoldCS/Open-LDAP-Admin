@@ -48,7 +48,7 @@ if ( strcmp('org_units',$request) == 0 ) {
             $sub_options[$i]['id'] = $ou_tree[$i]['dn'];
             $sub_options[$i]['text'] = $ou_tree[$i]['option'];
         }
-        $results = array("results" => array_values($sub_options));
+        $results = array_values($sub_options);
         echo json_encode($results);// Pass the results to javascript
     
     }
