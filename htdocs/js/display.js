@@ -104,7 +104,7 @@ function editAttribute(tableRow, attribute) {
 }
 
 /////////////////
-// Javascript function for controlling editing of attributes.
+// Javascript function for controlling editing of Organizational Unit.
 function editOrgUnit(tableRow, attribute) {
 
     var targetAttribute = tableRow.querySelector("td:nth-child(1)");// Get attribute cell
