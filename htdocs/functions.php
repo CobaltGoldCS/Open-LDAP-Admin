@@ -63,6 +63,57 @@ function get_org_units($ldap, $ldap_base) {
     return $ou_tree;
 }
 
+/*  Query LDAP for list of Group Memberships
+*/
+function get_group_memberships($ldap, $dn, $ldap_user_filter) {
+
+    // require_once("../conf/config.inc.php");
+    // require_once("../lib/ldap.inc.php");
+    $group_memberships = array();
+
+    if ($ldap) {
+
+        # Search attributes
+        $attributes = array("memberOf", "seeAlso");
+
+        # Search entry
+        $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
+
+        $errno = ldap_errno($ldap);
+        if ( $errno ) {
+            $result = "ldaperror";
+            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+        } else {
+            $entry = ldap_get_entries($ldap, $search);
+        }
+
+        # Sort attributes values
+        foreach ($entry[0] as $attr => $values) {
+            if ( is_array($values) && $values['count'] > 1 ) {
+                asort($values);
+            }
+            if ( isset($values['count']) ) {
+                unset($values['count']);
+            }
+            $entry[0][$attr] = $values;
+        }
+
+        # Group Membership
+        $group_dns = $entry[0]['memberof'];
+        for ($i = 0; $i < sizeof($group_dns); $i++) {
+            $group_memberships[$i]['dn'] = $group_dns[$i];
+            $group_memberships[$i]['arr'] = ldap_explode_dn($group_dns[$i],2);
+            $group_memberships[$i]['name'] = $group_memberships[$i]['arr'][0];
+        }
+        ldap_free_result($search);
+
+    } else {
+        error_log("Error: an LDAP connection was not established.");
+    }
+    return $group_memberships;
+}
+
+
 /*  Query LDAP for list of all available groups
 */
 function get_groups($ldap, $ldap_group_base) {
