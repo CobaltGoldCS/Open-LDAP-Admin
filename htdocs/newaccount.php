@@ -61,33 +61,9 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         $ou_tree = get_org_units($ldap, $ldap_base);
         $smarty->assign("org_tree", $ou_tree);
         
-        /* Query #3: Get Groups Units */
-
-        $filter="(objectClass=group)";
-        $justthese = array("dn"); 
-        $search = ldap_search($ldap, $ldap_group_base, $filter, $justthese);
-        $errno = ldap_errno($ldap);
-        // $orgUnits = ldap_get_entries($ldap, $search);
-        // print_r($orgUnits);
-        
-        if ( $errno ) {
-            $result = "ldaperror";
-            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
-        } else {
-
-            $groups = ldap_get_entries($ldap, $search);// Query LDAP for full list of groups
-
-            for ($i=0; $i < $groups['count']; $i++) {// For each group
-                // echo $groups[$i]["dn"]."<br>";
-                $groups[$i]['option'] = ldap_explode_dn($groups[$i]['dn'],2)[0];
-                // print_r($exploded_groups);
-                // echo "<br>";
-            }
-            usort($groups, 'sortByOption');
-            $smarty->assign("ldap_groups", $groups);
-            
-        }
-        ldap_free_result($search);// End Query #3
+        /* Query #3: Get Groups */
+        $groups = get_groups($ldap, $ldap_group_base);
+        $smarty->assign("ldap_groups", $groups);
 
 
         # Sort attributes values
