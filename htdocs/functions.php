@@ -63,6 +63,48 @@ function get_org_units($ldap, $ldap_base) {
     return $ou_tree;
 }
 
+/*  Query LDAP for list of all available groups
+*/
+function get_groups($ldap, $ldap_group_base) {
+
+    // require_once("../conf/config.inc.php");
+    // require_once("../lib/ldap.inc.php");
+    $groups = array();
+
+    if ($ldap) {
+
+        /* Query #3: Get Groups Units */
+
+        $filter="(objectClass=group)";
+        $justthese = array("dn"); 
+        $search = ldap_search($ldap, $ldap_group_base, $filter, $justthese);
+        $errno = ldap_errno($ldap);
+        // $orgUnits = ldap_get_entries($ldap, $search);
+        // print_r($orgUnits);
+        
+        if ( $errno ) {
+            $result = "ldaperror";
+            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+        } else {
+
+            $groups = ldap_get_entries($ldap, $search);// Query LDAP for full list of groups
+
+            for ($i=0; $i < $groups['count']; $i++) {// For each group
+                // echo $groups[$i]["dn"]."<br>";
+                $groups[$i]['option'] = ldap_explode_dn($groups[$i]['dn'],2)[0];
+                // print_r($exploded_groups);
+                // echo "<br>";
+            }
+            usort($groups, 'sortByOption');
+            
+        }
+        ldap_free_result($search);
+
+    } else {
+        error_log("Error: an LDAP connection was not established.");
+    }
+    return $groups;
+}
 
 /*
     USORT() function to sort an array by subarray value
