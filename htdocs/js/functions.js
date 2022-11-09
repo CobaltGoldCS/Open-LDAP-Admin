@@ -119,3 +119,19 @@ function AutoFill(input,target) {
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+
+/////////////////
+// Attribute editing initialization function
+// Note: This function is very specific to display.js
+function hidePreviousMessages() {
+
+    /////////////////
+    // Hide any messages from previous edits
+    message = document.getElementById('editattributeresult');
+    if (message) { message.style.display = "none"; }
+
+    /////////////////
+    // Show the welcome bar again
+    document.getElementById('welcome-bar').style.display = "block";
+
+}

@@ -8,21 +8,14 @@
 // Javascript function for controlling editing of attributes.
 function editAttribute(tableRow, attribute) {
 
+    hidePreviousMessages()// Hide any previous messages
+
     var targetAttribute = tableRow.querySelector("td:nth-child(3)");// Get attribute cell
     var targetEditButton = tableRow.querySelector("td:nth-child(4)");// Get edit button cell
     
     /////////////////
     // Save form selector
     form = document.submitedits;
-
-    /////////////////
-    // Hide any messages from previous edits
-    message = document.getElementById('editattributeresult');
-    if (message) { message.style.display = "none"; }
-
-    /////////////////
-    // Show the welcome bar again
-    document.getElementById('welcome-bar').style.display = "block";
 
     /////////////////
     // Building attribute user text input field within "td:nth-child(3)"
@@ -111,21 +104,14 @@ function editAttribute(tableRow, attribute) {
 // Javascript function for controlling editing of Organizational Unit.
 function editOrgUnit(tableRow, attribute) {
 
+    hidePreviousMessages()// Hide any previous messages
+
     var targetAttribute = tableRow.querySelector("td:nth-child(1)");// Get attribute cell
     var targetEditButton = tableRow.querySelector("td:nth-child(2)");// Get edit button cell
 
     /////////////////
     // Save form selector
     form = document.editOU;
-
-    /////////////////
-    // Hide any messages from previous edits
-    message = document.getElementById('editattributeresult');
-    if (message) { message.style.display = "none"; }
-    
-    /////////////////
-    // Show the welcome bar again
-    document.getElementById('welcome-bar').style.display = "block";
 
     /////////////////
     // Org Unit validation
@@ -216,18 +202,11 @@ function editOrgUnit(tableRow, attribute) {
 // Javascript function for deleting groups from an LDAP account.
 function deleteGroup(td, groupDN) {
 
+    hidePreviousMessages()// Hide any previous messages
+
     event.preventDefault();// Disable default form submit action
     cancelButton = td.firstChild;// Get cancel button selector
     form = document.edit_groups;// Save form selector
-
-    /////////////////
-    // Hide any messages from previous edits
-    message = document.getElementById('editattributeresult');
-    if (message) { message.style.display = "none"; }
-
-    /////////////////
-    // Show the welcome bar again
-    document.getElementById('welcome-bar').style.display = "block";
 
     /////////////////
     // Convert delete button to cancel button
@@ -276,15 +255,8 @@ function editGroups(table, dn, button) {
     event.preventDefault();// Disable default form submit action
     form = document.edit_groups;// Save form selector
 
-    /////////////////
-    // Hide any messages from previous edits
-    message = document.getElementById('editattributeresult');
-    if (message) { message.style.display = "none"; }
+    hidePreviousMessages()// Hide any previous messages
 
-    /////////////////
-    // Show the welcome bar again
-    document.getElementById('welcome-bar').style.display = "block";
-    
     /////////////////
     // Replace bulk-edit button with cancel edit button
     button.classList.add('btn-danger');// Change button backgroupd to red
