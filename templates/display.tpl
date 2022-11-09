@@ -15,12 +15,21 @@
 
     {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
         {if $editattributeresult eq 'successfuledit'}
-            <div class="alert alert-success" id="editattributeresult"><i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}</div>
+            <div class="alert alert-success" id="editattributeresult">
+                <i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}
+                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="hidePreviousMessages()"></button></span>
+            </div>
         {else}
-            <div class="alert alert-warning" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}</div>
+            <div class="alert alert-warning" id="editattributeresult">
+                <i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}
+                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="hidePreviousMessages()"></button></span>
+            </div>
         {/if}
     {elseif $editattributeresult neq ''}
-        <div class="alert alert-danger" id="editattributeresult"><i class="fa fa-fw fa-exclamation-triangle"></i> Error while editing attribute: {$editattributeresult}</div>
+        <div class="alert alert-danger" id="editattributeresult">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> Error while editing attribute: {$editattributeresult}
+            <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="hidePreviousMessages()"></button></span>
+        </div>
     {/if}
 
 <div class="row">
