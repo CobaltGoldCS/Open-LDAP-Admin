@@ -173,24 +173,35 @@
         {* Group Membership *}
         {if $isadmin}
             <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
-                    <i class="fa fa-fw fa-group"></i>
-                    {$msg_groupmembership}
-                </p>
-            </div>
 
-            <div class="panel-body">
-                <table class="table table-striped table-hover">
-                    {if isset($groups)}
-                        {foreach from=$groups item=group key=key}
-                        <tr><td class="col-md-6"><b>{$key+1}.</b> {$group.name}</td></tr>
-                        {/foreach}
-                    {else}
-                        <tr><td class="col-md-6"><i style="color:gray;">{$msg_nogroupsassigned}</i></td></tr>
-                    {/if}
-                </table>
-            </div>
+                <div class="panel-heading text-center">
+                    <p class="panel-title">
+                        <i class="fa fa-fw fa-group"></i>
+                        {$msg_groupmembership}
+                    </p>
+                </div>
+
+                <div class="panel-body">
+                    <form name="edit_groups">
+                        <table class="table table-striped table-hover table-responsive" id="edit_groups">
+                            {if isset($groups)}
+                                {foreach from=$groups item=group key=key}
+                                <tr>
+                                    <td class="col-md-6"><b>{$key+1}.</b> {$group.name}</td>
+                                    <td class="text-right fit"><button style="border: none; background: none; font-size: 18px;" class="fa fa-fw fa-trash" onclick="deleteGroup(this.parentElement,'{$group.dn}')"></button></td>
+                                </tr>
+                                {/foreach}
+                            {else}
+                                <tr><td class="col-md-6"><i style="color:gray;">{$msg_nogroupsassigned}</i></td></tr>
+                            {/if}
+                        </table>
+                        {if ($isadmin and $admineditable) or $usereditable}
+                            <button class="btn btn-primary" style="margin-top:15px;" onclick="editGroups(document.getElementById('edit_groups'),'{$dn}',this)"><i class="fa fa-fw fa-plus"></i> Add groups</button>
+                        {/if}
+                        <input type="hidden" name="dn" value="{$dn}" />
+                    </form>
+                </div>
+
             </div>
         {/if}
     

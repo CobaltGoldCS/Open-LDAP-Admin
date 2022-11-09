@@ -202,3 +202,136 @@ function editOrgUnit(tableRow, attribute) {
     tableRow.appendChild(attributeField);
 
 }
+
+
+/////////////////
+// Javascript function for deleting groups from an LDAP account.
+function deleteGroup(td, groupDN) {
+
+    event.preventDefault();// Disable default form submit action
+    cancelButton = td.firstChild;// Get cancel button selector
+    form = document.edit_groups;// Save form selector
+
+    /////////////////
+    // Hide any messages from previous edits
+    message = document.getElementById('editattributeresult');
+    if (message) { message.style.display = "none"; }
+
+    /////////////////
+    // Convert delete button to cancel button
+    cancelButton.classList.remove('fa-trash');// Remove + icon
+    cancelButton.classList.add('fa-remove');// Replace with x icon
+    cancelButton.onclick = function(){
+        console.log("Exiting");
+    };
+
+    /////////////////
+    // Building edit submit/save button within "td:nth-child(4)"
+    var confirmText = document.createElement('span');
+    confirmText.innerHTML = "Are you sure?";
+    confirmText.style.cssText = `
+        letter-spacing: -.05rem;
+        font-size: 12px;
+        vertical-align: middle;
+        color: #e90000;
+    `;
+
+    /////////////////
+    // Building edit submit/save button within "td:nth-child(4)"
+    var saveButton = document.createElement('button');// Create text input field <button></button>
+    saveButton.name = "deleteGroup";// sets $_POST['deleteGroup]
+    saveButton.value = groupDN;// sets value for $_POST['deleteGroup]
+    saveButton.type = "submit";
+    saveButton.style = "border:none;background:none;font-size:18px;color:green;";
+    saveButton.className = "fa fad fa-check";
+    saveButton.onclick = function(event){
+        form.action = "index.php?page=editattribute";
+        form.method = "post";
+        // event.preventDefault();
+        // console.log("index.php?page=editattribute");
+    }
+
+    td.prepend(saveButton);// prepend saveButton
+    td.prepend(confirmText);
+
+}
+
+
+/////////////////
+// Javascript function for bulk-editing groups on an LDAP account.
+function editGroups(table, dn, button) {
+
+    event.preventDefault();// Disable default form submit action
+    form = document.edit_groups;// Save form selector
+
+    /////////////////
+    // Hide any messages from previous edits
+    message = document.getElementById('editattributeresult');
+    if (message) { message.style.display = "none"; }
+
+    /////////////////
+    // Replace bulk-edit button with cancel edit button
+    button.classList.add('btn-danger');// Change button backgroupd to red
+    button.firstChild.classList.remove('fa-plus');// Remove + icon
+    button.firstChild.classList.add('fa-remove');// Replace with x icon
+    button.innerHTML = button.innerHTML.replace('Add groups','Cancel');// Change button text
+    button.onclick = function(event){
+        console.log('Exiting');
+    }
+
+    /////////////////
+    // Building attribute user text input field within "td:nth-child(2)"
+    var groupPicker = document.createElement('select');// Create text input field <button></button>
+    groupPicker.setAttribute("multiple", "");// Add 'multiple' property
+    groupPicker.name="ldap_groups[]";
+    groupPicker.className = "form-control select2-groups";
+    groupPicker.style = "width:100%; height:30px;";
+    if ( table ) { table.replaceWith(groupPicker); }
+    $.ajax({// Do AJAX call to get JSON data FIRST
+        type: 'GET',
+        url: 'ajax.php',
+        dataType: 'json',
+        data: {request: 'groups'},
+    }).done(function (groups) {// THEN add JSON response to Select2 Options
+        
+        // Create the Select2 object with all available groups
+        var groupSelect = $('.select2-groups').select2({
+            placeholder: 'Add or remove groups',
+            data: groups,
+        });
+
+        // Do second AJAX call to get existing group memberships and pre-select them
+        $.ajax({
+            type: 'GET',
+            url: 'ajax.php',
+            dataType: 'json',
+            data: {request: 'group-memberships', dn: dn},
+        }).done(function (memberships) {// THEN add JSON response to Select2 Options
+            for (let i = 0; i < memberships.length; i++) {
+                // Check if option already exists and add it if necessary
+                if (groupSelect.find("option[value='" + memberships[i].id + "']").length) {
+                    groupSelect.val(memberships[i].id).trigger('change');// It exists, so select it
+                } else { 
+                    var newOption = new Option(memberships[i].text, memberships[i].id, true, true);// Create a DOM Option and pre-select by default
+                    groupSelect.append(newOption).trigger('change');// Append it to the select
+                }
+            }
+        });
+
+    });
+
+    /////////////////
+    // Building edit submit/save button
+    var saveButton = document.createElement('button');// Create text input field <button></button>
+    saveButton.type = "submit";
+    saveButton.name = "saveGroups";// sets $_POST['saveGroups]
+    saveButton.className = "btn btn-success";
+    saveButton.innerHTML = '<i class="fa fa-fw fa-save"></i> Save';
+    saveButton.style = "margin-top:15px;margin-left:10px;";
+    saveButton.onclick = function(event){
+        form.action = "index.php?page=editattribute";
+        form.method = "post";
+    }
+    button.insertAdjacentElement('afterend',saveButton);
+
+}
