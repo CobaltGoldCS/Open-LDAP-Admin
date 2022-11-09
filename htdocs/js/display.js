@@ -287,20 +287,20 @@ function editGroups(table, dn, button) {
     groupPicker.className = "form-control select2-groups";
     groupPicker.style = "width:100%; height:30px;";
     if ( table ) { table.replaceWith(groupPicker); }
-    $.ajax({// Do AJAX call to get JSON data FIRST
+    $.ajax({// STEP1: Do AJAX call to get JSON data FIRST
         type: 'GET',
         url: 'ajax.php',
         dataType: 'json',
         data: {request: 'groups'},
     }).done(function (groups) {// THEN add JSON response to Select2 Options
         
-        // Create the Select2 object with all available groups
+        // STEP 2: Initialize the Select2 object with all available groups
         var groupSelect = $('.select2-groups').select2({
             placeholder: 'Add or remove groups',
             data: groups,
         });
 
-        // Do second AJAX call to get existing group memberships and pre-select them
+        // STEP 3: Do second AJAX call to get existing group memberships and pre-select them
         $.ajax({
             type: 'GET',
             url: 'ajax.php',
