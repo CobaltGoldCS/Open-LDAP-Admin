@@ -63,7 +63,8 @@ function get_org_units($ldap, $ldap_base) {
     return $ou_tree;
 }
 
-/*  Query LDAP for list of Group Memberships
+/*  
+    Query LDAP for list of Group Memberships
 */
 function get_group_memberships($ldap, $dn, $ldap_user_filter) {
 
@@ -114,7 +115,8 @@ function get_group_memberships($ldap, $dn, $ldap_user_filter) {
 }
 
 
-/*  Query LDAP for list of all available groups
+/*  
+    Query LDAP for list of all available groups
 */
 function get_groups($ldap, $ldap_group_base) {
 
