@@ -1,3 +1,9 @@
+{if $ldap_authentication and $authenticated and $page eq "display"}
+    <div class="alert alert-success"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
+    {if $isadmin}<span style="float: right;"> You have admin privileges.</span>{/if}
+    </div>
+{/if}
+
 {if empty($entry) or $entry.count eq 0} {* If there are no entries to be displayed, show welcome page *}
 <a href="index.php">
     <img src="{$logo}" alt="{$msg_title}" class="logo img-responsive center-block" />
