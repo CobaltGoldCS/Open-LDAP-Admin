@@ -21,6 +21,10 @@ function editAttribute(tableRow, attribute) {
     if (message) { message.style.display = "none"; }
 
     /////////////////
+    // Show the welcome bar again
+    document.getElementById('welcome-bar').style.display = "block";
+
+    /////////////////
     // Building attribute user text input field within "td:nth-child(3)"
     var td = document.createElement('td');// Create <td></td>
     td.style = "padding:4px;"
@@ -118,6 +122,10 @@ function editOrgUnit(tableRow, attribute) {
     // Hide any messages from previous edits
     message = document.getElementById('editOUresult');
     if (message) { message.style.display = "none"; }
+    
+    /////////////////
+    // Show the welcome bar again
+    document.getElementById('welcome-bar').style.display = "block";
 
     /////////////////
     // Org Unit validation
@@ -218,6 +226,10 @@ function deleteGroup(td, groupDN) {
     if (message) { message.style.display = "none"; }
 
     /////////////////
+    // Show the welcome bar again
+    document.getElementById('welcome-bar').style.display = "block";
+
+    /////////////////
     // Convert delete button to cancel button
     cancelButton.classList.remove('fa-trash');// Remove + icon
     cancelButton.classList.add('fa-remove');// Replace with x icon
@@ -269,6 +281,10 @@ function editGroups(table, dn, button) {
     message = document.getElementById('editattributeresult');
     if (message) { message.style.display = "none"; }
 
+    /////////////////
+    // Show the welcome bar again
+    document.getElementById('welcome-bar').style.display = "block";
+    
     /////////////////
     // Replace bulk-edit button with cancel edit button
     button.classList.add('btn-danger');// Change button backgroupd to red

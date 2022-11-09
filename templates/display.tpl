@@ -1,5 +1,5 @@
-{if $ldap_authentication and $authenticated and $page eq "display"}
-    <div class="alert alert-success"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
+{if $ldap_authentication and $authenticated}
+    <div class="alert alert-primary" id="welcome-bar" {if $editattributeresult neq ""}style="display: none;"{/if}><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
     {if $isadmin}<span style="float: right;"> You have admin privileges.</span>{/if}
     </div>
 {/if}
