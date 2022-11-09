@@ -298,10 +298,11 @@ function editGroups(table, dn, button) {
             preselected = new Array(); var i = 0;// Initialize some variables
             memberships.forEach(function(m) {// Loop through existing group memberships
                 if (groupSelect.find("option[value='" + m.id + "']").length) {// if the option exists
-                    preselected[++i] = m.id; // It exists, so add it to pre-selection and move to next index
+                    preselected[++i] = m.id;// Add it to pre-selection and move to next index
                 } else {// Create a new option for it
                     var option = new Option(m.text, m.id, true, true);// Create Option object
                     groupSelect.append(option).trigger('change');// Append the new option
+                    preselected[++i] = m.id;// Add it to pre-selection and move to next index
                 }
             });
             groupSelect.val(preselected).trigger('change');// Trigger UI update for preselections
