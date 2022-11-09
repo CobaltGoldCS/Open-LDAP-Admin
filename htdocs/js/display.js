@@ -120,7 +120,7 @@ function editOrgUnit(tableRow, attribute) {
 
     /////////////////
     // Hide any messages from previous edits
-    message = document.getElementById('editOUresult');
+    message = document.getElementById('editattributeresult');
     if (message) { message.style.display = "none"; }
     
     /////////////////
