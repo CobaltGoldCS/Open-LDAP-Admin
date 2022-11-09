@@ -282,7 +282,6 @@ function editGroups(table, dn, button) {
     /////////////////
     // Building attribute user text input field within "td:nth-child(2)"
     var groupPicker = document.createElement('select');// Create text input field <button></button>
-    groupPicker.setAttribute("multiple", "");// Add 'multiple' property
     groupPicker.name="ldap_groups[]";
     groupPicker.className = "form-control select2-groups";
     groupPicker.style = "width:100%; height:30px;";
@@ -297,6 +296,7 @@ function editGroups(table, dn, button) {
         // STEP 2: Initialize the Select2 object with all available groups
         var groupSelect = $('.select2-groups').select2({
             placeholder: 'Add or remove groups',
+            multiple: true,
             data: groups,
         });
 
@@ -307,15 +307,16 @@ function editGroups(table, dn, button) {
             dataType: 'json',
             data: {request: 'group-memberships', dn: dn},
         }).done(function (memberships) {// THEN add JSON response to Select2 Options
-            for (let i = 0; i < memberships.length; i++) {
-                // Check if option already exists and add it if necessary
-                if (groupSelect.find("option[value='" + memberships[i].id + "']").length) {
-                    groupSelect.val(memberships[i].id).trigger('change');// It exists, so select it
-                } else { 
-                    var newOption = new Option(memberships[i].text, memberships[i].id, true, true);// Create a DOM Option and pre-select by default
-                    groupSelect.append(newOption).trigger('change');// Append it to the select
+            preselected = new Array(); var i = 0;// Initialize some variables
+            memberships.forEach(function(m) {// Loop through existing group memberships
+                if (groupSelect.find("option[value='" + m.id + "']").length) {// if the option exists
+                    preselected[++i] = m.id; // It exists, so add it to pre-selection and move to next index
+                } else {// Create a new option for it
+                    var option = new Option(m.text, m.id, true, true);// Create Option object
+                    groupSelect.append(option).trigger('change');// Append the new option
                 }
-            }
+            });
+            groupSelect.val(preselected).trigger('change');// Trigger UI update for preselections
         });
 
     });
