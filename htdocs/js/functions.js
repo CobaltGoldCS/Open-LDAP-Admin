@@ -135,3 +135,11 @@ function hidePreviousMessages() {
     document.getElementById('welcome-bar').style.display = "block";
 
 }
+
+/////////////////
+// Remove GET editattributeresult from URL
+function clearGET(regex) {
+    if (window.location.href.match(regex) != null){
+        window.location = window.location.href.replace(regex, "");
+    }
+}
