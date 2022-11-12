@@ -138,7 +138,8 @@ function hidePreviousMessages() {
 
 /////////////////
 // Remove GET editattributeresult from URL
-function clearGET(regex) {
+function clearGET(variable) {
+    const regex = new RegExp(`&${variable}=(.+?)(?=(\&|$))`);
     if (window.location.href.match(regex) != null){
         window.location = window.location.href.replace(regex, "");
     }
