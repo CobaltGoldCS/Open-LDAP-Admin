@@ -109,6 +109,7 @@ $use_autofill = array(// Use the following array to control the autofilling of f
     array('source'=>'givenname','target'=>'displayname'),
     array('source'=>'sn','target'=>'displayname'),
 );
+$check_unique = array('samaccountname','uid');// Attributes in this array are checked for uniqueness before account creation
 
 # Features
 $use_checkpassword = true;
@@ -180,6 +181,6 @@ if (isset($header_name_extra_config)) {
 }
 
 # JSON encoded object passed to Javascript (loaded in header.tpl)
-$js_config_obj = array('autofill_attributes' => $use_autofill);
+$js_config_obj = array('autofill_attributes' => $use_autofill, 'check_unique'=> $check_unique);
 
 ?>

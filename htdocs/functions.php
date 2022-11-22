@@ -159,6 +159,52 @@ function get_groups($ldap, $ldap_group_base) {
     return $groups;
 }
 
+
+/*  
+    Perform "loose" LDAP queries given an attribute and/or input
+*/
+function query_ldap($ldap, $ldap_base, $attr, $input) {
+
+    $entries = $sub_array = array();
+    $success = false;
+    $count = 0;
+
+    if(isValid($input)) {// validate input
+
+        if ($ldap and $input and $attr) {
+
+            $filter="(".$attr."=".$input.")";
+            $search = ldap_search($ldap, $ldap_base, $filter, array("dn"),1,25,10);
+            $errno = ldap_errno($ldap);
+            
+            if ( $errno ) {
+                $result = "ldaperror";
+                error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+            } else {
+
+                $success = true;
+
+                $entries = ldap_get_entries($ldap, $search);// Query LDAP for full list of groups
+                $count = $entries['count'];
+
+                foreach($entries as $entry) {
+                    if ($entry['dn']) {// If the entry has a valid dn
+                        $sub_array[]['dn'] = $entry['dn'];
+                    }
+                }
+            
+            }
+            ldap_free_result($search);
+
+        } else {
+            error_log("Error: an LDAP connection was not established.");
+            $success = false;
+        }
+    }
+    return array('count'=>$count,'entries'=>$sub_array,'attr'=>$attr,'success'=>$success,'input'=>$input,'filter'=>$filter);
+}
+
+
 /*
     USORT() function to sort an array by subarray value
     https://stackoverflow.com/questions/2477496/php-sort-array-by-subarray-value
@@ -177,6 +223,14 @@ function encodePassword($password) {
     $encoded="";
     for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password{$i}}\000";}
     return $encoded;
+}
+
+/*
+    Check for invalid characters
+    https://stackoverflow.com/questions/1735972/php-fastest-way-to-check-for-invalid-characters-all-but-a-z-a-z-0-9
+*/
+function isValid($str) {
+    return !preg_match('/[^A-Za-z0-9 .#\\-$]/', $str);
 }
 
 ?>

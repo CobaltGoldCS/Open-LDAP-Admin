@@ -112,4 +112,28 @@ if ( strcmp('group-memberships',$request) == 0 and isset($_GET["dn"]) ) {
     }
 }
 
+
+# Handle AJAX requests for "loose" LDAP queries
+if ( strcmp('query_ldap',$request) == 0 ) {
+    $input = $_GET['input'];
+    $attr = $_GET['attribute'];
+        
+    # Connect to LDAP
+    $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
+
+    $ldap = $ldap_connection[0];
+    $result = $ldap_connection[1];
+
+    if ($ldap) {
+    
+        # Get All Available Org Units
+        $entries = array();
+        $entries = query_ldap($ldap, $ldap_base, $attr, $input);
+
+        echo json_encode($entries);// Pass the results to javascript
+    
+    }
+
+}
+
 ?>

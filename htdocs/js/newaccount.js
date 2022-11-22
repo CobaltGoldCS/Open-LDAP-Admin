@@ -33,7 +33,30 @@ $(document).ready(function() {
         AutoFill(window[d.source],window[d.target]);
     });
 
-});
+
+    /////////////////
+    // Check for uniqueness on LDAP attributes upon user input
+    //   This checks user input for uniqueness in real-time by quering LDAP to see if object exists.
+    //   This is to avoid LDAP exists error upon new account creation.
+    js_config_obj.check_unique.forEach(function (attr) {// For each attribute specified in config.inc.php
+        let selector = window[attr];// Save input selector for given attribute
+        if ( selector ) {// If field exists
+            var message = alertMsg("message-"+attr);// create HTML message element
+            selector.addEventListener('input', delay(function (e) {// Add delayed input listener
+                query = query_ldap(this.value,attr);// Query LDAP
+                if (query.count === 1){
+                    selector.style.border = "2px solid red";
+                    message.innerHTML = attr+" exists.";
+                    selector.insertAdjacentElement('afterend',message);
+                } else {
+                    selector.style.border = "2px solid green";
+                    message.remove();
+                }
+            }, 200));//End delay(), End addEventListener()
+        }
+    });
+
+});// End $(document).ready()
 
 /////////////////
 // Javascript function for controlling creation of new accounts.
