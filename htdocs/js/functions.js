@@ -78,7 +78,7 @@ function AutoFill(input,target) {
     // Listen for and handle keydown events
     let upper = false; let ctrl = false;
     input.addEventListener('keydown', event => {
-        const allowedChars = 'abcdefghijklmnopqrstuvwxyz0123456789\' ';
+        const allowedChars = 'abcdefghijklmnopqrstuvwxyz0123456789.\' ';
         const key = event.key.toLowerCase();
 
         switch (key) {
