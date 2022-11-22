@@ -37,6 +37,12 @@
   </style>
 {/if}
 
+{* Javascript Config Object *}
+<script>
+  var js_config_obj = {$js_config_obj|json_encode nofilter};
+  console.log(js_config_obj);
+</script>
+
 </head>
 <body>
 
