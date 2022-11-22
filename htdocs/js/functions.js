@@ -27,6 +27,11 @@ function EditAttributeValidate(attribute,selector){
             validated = !isEmpty(selector.value) ? true : false;
             message = "Please choose an Organizational Unit.";
             break;
+        case ("samaccountname" || "uid"):
+            var regex = /^[a-zA-Z0-9_]*$/;
+            validated = selector.value.match(regex) ? true : false;
+            message = "Input contains invalid characters";
+            break;
         default:
             validated = !isEmpty(selector.value) ? true : false;
             message = "Field cannot be blank.";
