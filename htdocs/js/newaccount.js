@@ -18,8 +18,9 @@ $(document).ready(function() {
         // theme: "bootstrap4"
     });
 
+
     /////////////////
-    // Displayname auto-fill
+    // Save selectors for all attribute input fields
     form = document.getElementById("newaccount");// Get form selector with ID "newaccount"
     attributes = form.elements;// Get all form elements on page load from account creation
     for (var i = 0, iLen = attributes.length; i < iLen; i++) {
