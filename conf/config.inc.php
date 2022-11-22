@@ -111,7 +111,7 @@ $use_autofill = array(// Use the following array to control the autofilling of f
 );
 
 # Editing and Account Creation
-$check_unique = array('samaccountname','uid');// Attributes in this array are checked for uniqueness before account creation or editing
+$check_unique = array('samaccountname','uid','mail');// Attributes in this array are checked for uniqueness before account creation or editing
 
 # Features
 $use_checkpassword = true;

@@ -230,7 +230,7 @@ function encodePassword($password) {
     https://stackoverflow.com/questions/1735972/php-fastest-way-to-check-for-invalid-characters-all-but-a-z-a-z-0-9
 */
 function isValid($str) {
-    return !preg_match('/[^A-Za-z0-9 .#\\-$]/', $str);
+    return !preg_match('/[^A-Za-z0-9 .@\\-$]/', $str);
 }
 
 ?>
