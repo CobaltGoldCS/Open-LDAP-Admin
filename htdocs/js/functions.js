@@ -204,3 +204,9 @@ function delay(callback, ms) {
     })
     return response ? JSON.parse(response) : null;// Return null if response is empty
 }
+
+/////////////////
+// Simple capitalize first letter of string
+function ucFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
