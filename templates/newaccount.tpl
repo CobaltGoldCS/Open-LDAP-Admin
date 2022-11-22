@@ -21,7 +21,6 @@
                     {$admineditable=$attributes_map.{$item}.admineditable}
                     {$usereditable=$attributes_map.{$item}.usereditable}
 
-                    {* Programming Note: between <tr></tr> tag gets overwritten by editattribute.js upon click event *}
                      <tr id="attribute-{$attribute}">
                         <th class="text-center">
                                 <i class="fa fa-fw fa-{$faclass}"></i>
@@ -31,7 +30,6 @@
                             </th>
                             <td style="padding: 4px;">
                                 <div class="input-group" style="width:100%;">
-                                {* <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span> *}
                                     <input type="text" name="{$attribute}" id="{$attribute}" class="form-control" style="border-radius:3px;" placeholder="{$attribute}" />
                                 </div>
                             </td>
