@@ -28,7 +28,7 @@ function EditAttributeValidate(attribute,selector){
             message = "Please choose an Organizational Unit.";
             break;
         case ("samaccountname" || "uid"):
-            var regex = /^[a-zA-Z0-9_]*$/;
+            var regex = /^[a-zA-Z0-9_\.]*$/;
             validated = selector.value.match(regex) ? true : false;
             message = "Input contains invalid characters";
             break;
