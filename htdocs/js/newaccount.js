@@ -46,7 +46,7 @@ $(document).ready(function() {
                 query = query_ldap(this.value,attr);// Query LDAP
                 if (query.count === 1){
                     selector.style.border = "2px solid red";
-                    message.innerHTML = attr+" exists.";
+                    message.innerHTML = ucFirstLetter(attr)+" already exists.";
                     selector.insertAdjacentElement('afterend',message);
                 } else {
                     selector.style.border = "2px solid green";
