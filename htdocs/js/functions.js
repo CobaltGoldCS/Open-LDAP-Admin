@@ -38,6 +38,12 @@ function EditAttributeValidate(attribute,selector){
             break;
     }
 
+    // Queries LDAP for existence of attribute in database
+    if (js_config_obj.check_unique.includes(attribute)) {
+        validated = (query_ldap(selector.value,attribute).count === 1) ? false : true;
+        message = attribute +" exists.";
+    }
+
     return { validated, message };
 
 };
