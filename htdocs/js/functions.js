@@ -40,7 +40,8 @@ function EditAttributeValidate(attribute,selector){
 
     // Queries LDAP for existence of attribute in database
     if (js_config_obj.check_unique.includes(attribute)) {
-        validated = (query_ldap(selector.value,attribute).count === 1) ? false : true;
+        var query = query_ldap(selector.value,attribute);
+        validated = (query.count === 1) ? false : true;
         message = "Cannot be the same as existing value.";
     }
 
