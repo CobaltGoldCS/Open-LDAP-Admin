@@ -171,4 +171,28 @@ function delay(callback, ms) {
     };
   }
 
+/////////////////
+// Query LDAP
+// Example usage:
+//   query = query_ldap(this.value,'samaccountname');
+// Returns (from ajax.php):
+//   array('count'=>$count,'entries'=>$sub_array,'attr'=>$attr,'success'=>$success,'input'=>$input,'filter'=>$filter);
+  function query_ldap(val,attr) {
+    var response = '';
+    let req = {
+        request: 'query_ldap',
+        input: val,
+        attribute: attr,
+    }
+    $.ajax({
+        type: 'GET',
+        url: 'ajax.php',
+        data: req,
+        async: false,
+        success: function(data){
+            response = data;
+            // console.log(data);
+        },
+    })
+    return response ? JSON.parse(response) : null;// Return null if response is empty
 }
