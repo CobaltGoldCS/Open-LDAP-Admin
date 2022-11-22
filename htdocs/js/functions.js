@@ -154,4 +154,21 @@ function clearGET(variable) {
     if (window.location.href.match(regex) != null){
         window.location = window.location.href.replace(regex, "");
     }
+/////////////////
+// Simple delay function (thanks https://stackoverflow.com/questions/1909441/how-to-delay-the-keyup-handler-until-the-user-stops-typing)
+// Example usage:
+//    $('#input').keyup(delay(function (e) {
+//      console.log('Time elapsed!', this.value);
+//    }, 500));
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+
 }
