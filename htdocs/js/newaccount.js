@@ -108,14 +108,15 @@ function newaccount() {
 /////////////////
 // Displayname auto-fill
 
-// Get form selector
-form = document.getElementById("newaccount");
+form = document.getElementById("newaccount");// Get form selector
 
 attributes = form.elements;// Get all form elements on page load
 for (var i = 0, iLen = attributes.length; i < iLen; i++) {
     var attribute = attributes[i].name;
 }
 
-AutoFill(attributes.givenname,attributes.displayname);
-AutoFill(attributes.sn,attributes.displayname);
-AutoFill(attributes.physicaldeliveryofficename,attributes.samaccountname);
+// Take each js autofill_attributes config item and pass to AutoFill() function
+// Here we use window[] to interpret string as variable so the selector is passed to AutoFill()
+js_config_obj.autofill_attributes.forEach(function (d) {
+    AutoFill(window[d.source],window[d.target]);
+});

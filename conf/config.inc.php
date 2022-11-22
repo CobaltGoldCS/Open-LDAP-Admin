@@ -105,6 +105,11 @@ $admin_editable_attributes = $display_items;
 # User Creation
 $user_creation_attributes = array('');// Additional attributes specified during user creation
 $ldap_group_base = $ldap_base;// LDAP group base OU for user creation
+$use_autofill = array(// Use the following array to control the autofilling of fields during account creation
+    array('source'=>'physicaldeliveryofficename','target'=>'samaccountname'),
+    array('source'=>'givenname','target'=>'displayname'),
+    array('source'=>'sn','target'=>'displayname'),
+);
 
 # Features
 $use_checkpassword = true;
@@ -174,5 +179,8 @@ if (isset($header_name_extra_config)) {
         }
     }
 }
+
+# JSON encoded object passed to Javascript (loaded in header.tpl)
+$js_config_obj = array('autofill_attributes' => $use_autofill);
 
 ?>
