@@ -6,7 +6,7 @@
 // Custom input validation function
 // Expects an LDAP 'attribute' as a string and a DOM selector.
 function EditAttributeValidate(attribute,selector){          
-
+    
     switch (attribute) {
         case "mobile":
             var regex = /^$|\d{10}]$/;
@@ -28,9 +28,14 @@ function EditAttributeValidate(attribute,selector){
             message = "Please choose an Organizational Unit.";
             break;
         case ("samaccountname" || "uid"):
-            var regex = /^[a-zA-Z0-9_\.]*$/;
-            validated = selector.value.match(regex) ? true : false;
-            message = "Input contains invalid characters";
+            if (!isEmpty(selector.value)) {
+                var regex = /^[a-zA-Z0-9_.]*$/;
+                validated = selector.value.match(regex) ? true : false;
+                message = "Input contains invalid characters.";
+            } else {
+                validated = false;
+                message = "Field cannot be blank.";
+            }
             break;
         default:
             validated = !isEmpty(selector.value) ? true : false;
@@ -38,13 +43,13 @@ function EditAttributeValidate(attribute,selector){
             break;
     }
 
-    // Queries LDAP for existence of attribute in database
-    if (js_config_obj.check_unique.includes(attribute)) {
+    // Queries LDAP for existence of attribute in database if above conditions are validated
+    if (js_config_obj.check_unique.includes(attribute) && validated) {
         var query = query_ldap(selector.value,attribute);
         validated = (query.count === 1) ? false : true;
         message = "Cannot be the same as existing value.";
     }
-
+    
     return { validated, message };
 
 };
