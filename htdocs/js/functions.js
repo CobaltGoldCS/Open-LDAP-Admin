@@ -100,6 +100,12 @@ function AutoFill(input,target) {
                     target.animate([{'border': '2px solid blue'}], 200);// Animate target border color
                 }
         }
+
+        // Simulate 'input' event in target element so eventListeners can be triggered at the target
+        // More info: https://stackoverflow.com/questions/35659430/how-do-i-programmatically-trigger-an-input-event-without-jquery
+        var event = document.createEvent('Event');
+        event.initEvent('input', true, true);
+        target.dispatchEvent(event);
      
     });
 
