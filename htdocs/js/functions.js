@@ -3,8 +3,9 @@
  */
 
 /////////////////
-// Custom input validation function
-// Expects an LDAP 'attribute' as a string and a DOM selector.
+// Custom input validation function for attribute editing and account creation
+//   Expects an LDAP 'attribute' as a string, and a DOM selector for the input field.
+//   Returns: (bool)validated, (string)message
 function EditAttributeValidate(attribute,selector){          
     
     switch (attribute) {
@@ -28,11 +29,11 @@ function EditAttributeValidate(attribute,selector){
             message = "Please choose an Organizational Unit.";
             break;
         case ("samaccountname" || "uid"):
-            if (!isEmpty(selector.value)) {
+            if (!isEmpty(selector.value)) {// If input is not empty
                 var regex = /^[a-zA-Z0-9_.]*$/;
                 validated = selector.value.match(regex) ? true : false;
                 message = "Input contains invalid characters.";
-            } else {
+            } else {// Input is empty
                 validated = false;
                 message = "Field cannot be blank.";
             }
