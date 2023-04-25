@@ -101,7 +101,9 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         // Use the rest of the POST values as definied by the $creation_attribute array
         $remaining_attributes = array_slice($_POST, 0, sizeof($creation_attributes));// Trim off 'org_unit', 'ldap_groups', 'newpassword', 'confirmpassword' and 'pwdreset' which are non-LDAP attributes
         foreach($remaining_attributes as $key => $value) {
-            $ldaprecord[$key] = $value;
+            if (!empty($value)) {
+                $ldaprecord[$key] = $value;
+            }
         }
 
         // Build the rest of the LDAP record with minimum required attributes unless specified by user config

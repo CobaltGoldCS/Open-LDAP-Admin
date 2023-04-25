@@ -20,9 +20,9 @@ function EditAttributeValidate(attribute,selector){
             message = "You have not entered a valid email address.";
             break;
         case "physicaldeliveryofficename":
-            var regex = /^\d{7}$/;
+            var regex = /^(\d{7})?$/;
             validated = selector.value.match(regex) ? true : false;
-            message = "Input must be a 7-digit ID.";
+            message = "Input must be a 7-digit ID or left blank.";
             break;
         case "org_unit":
             validated = !isEmpty(selector.value) ? true : false;
