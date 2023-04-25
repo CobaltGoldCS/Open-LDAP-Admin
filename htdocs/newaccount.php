@@ -34,7 +34,7 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
     if ($ldap) {
 
         /* Query #1: Get available attributes */
-        
+
         # Search attributes
         $attributes = array();
         $creation_attributes = isset($user_creation_attributes) ? array_merge($required_attributes,$user_creation_attributes) : $required_attributes;
@@ -56,11 +56,11 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         }
         ldap_free_result($search);// End Query #1
 
-        
+
         /* Query #2: Get Organizational Units */
         $ou_tree = get_org_units($ldap, $ldap_base);
         $smarty->assign("org_tree", $ou_tree);
-        
+
         /* Query #3: Get Groups */
         $groups = get_groups($ldap, $ldap_group_base);
         $smarty->assign("ldap_groups", $groups);
@@ -95,7 +95,7 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         $name = $_POST['givenname']." ".$_POST['sn'];// First Name
         $groups = $_POST["ldap_groups"];// Array of group DN's
         $newpassword = $_POST["newpassword"];// Password (placeholder)
-    
+
         $ldaprecord = array();// Preallocate
 
         // Use the rest of the POST values as definied by the $creation_attribute array
@@ -111,23 +111,23 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
         $ldaprecord['displayname'] = isset($_POST['displayname']) ? $_POST['displayname'] : $name;
         $ldaprecord['name'] = isset($_POST['name']) ? $_POST['name'] : $name;
         // $ldaprecord['userPassword'] =  '{MD5}' . base64_encode(pack('H*',md5($pwdtxt)));
-        
+
         $ldaprecord['objectclass'] = array("top","person","organizationalPerson","user");
         $ldaprecord["useraccountcontrol"] = "544";//544 - Account enabled, require password change
-    
+
         if ($ldap) {
-    
+
             $result = ldap_add($ldap, $dn, $ldaprecord);
             $errno = ldap_errno($ldap);
             $success_url = 'index.php?page=display&dn='.$dn;//Redirect page to display new account on success
-    
+
             /* STEP 1: Create the account */
             if ( $errno ) {// If there is an error, stop here
                 // echo "LDAP - User creation error $errno  (".ldap_error($ldap).")<br>";
                 header('Location: index.php?page=newaccount&createaccount='.ldap_error($ldap));
                 error_log("LDAP - User creation error $errno  (".ldap_error($ldap).")");
             } else {// Else continue to steps 2 & 3
-    
+
                 /* STEP 2: Add the user to any groups */
                 foreach( $groups as $group ) {
                     $member['member'] = $dn;// User's DN is added to group's 'member' array
@@ -139,10 +139,10 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
                         $callback .= '&groupadd=adderror';
                     }
                 }
-                
+
                 /* STEP 3: Set the user password */
                 $encodedPass = array('unicodepwd' => encodePassword($pwdtxt));
-                if(ldap_mod_replace ($ldap, $dn, $encodedPass)){ 
+                if(ldap_mod_replace ($ldap, $dn, $encodedPass)){
                     // echo "Successfully created new user.<br>";
                     $callback .= '&createaccount=success';
                 } else {
@@ -154,15 +154,15 @@ if ($authenticated and $isadmin) {// Do basic authentication check before loadin
                 $success_url .= $callback;// Append callback(s)
                 header('Location: '.$success_url);//Do the final redirect with callbacks appended
                 ldap_close($ldap); //Close connection
-    
+
             }
         }// END if($ldap)
- 
+
 
     }// END POST actions
 
 
-    
+
 } else {
     die("You are not allowed to use this resource.<br>Please access this page via index.php.");
 }// END Authentication Check

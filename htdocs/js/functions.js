@@ -6,8 +6,8 @@
 // Custom input validation function for attribute editing and account creation
 //   Expects an LDAP 'attribute' as a string, and a DOM selector for the input field.
 //   Returns: (bool)validated, (string)message
-function EditAttributeValidate(attribute,selector){          
-    
+function EditAttributeValidate(attribute,selector){
+
     switch (attribute) {
         case "mobile":
             var regex = /^$|(?:\d{3}[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
@@ -50,14 +50,14 @@ function EditAttributeValidate(attribute,selector){
         validated = (query.count === 1) ? false : true;
         message = "Cannot be the same as existing value.";
     }
-    
+
     return { validated, message };
 
 };
 
 /////////////////
 // Simple string isEmpty checker
-// 
+//
 function isEmpty(str) {
     return !str.trim().length;
 }
@@ -81,13 +81,13 @@ function alertMsg(id,messagetext) {
 // Custom auto-fill function
 // Expects an input field (text) and a target field. Auto-fills in real-time
 function AutoFill(input,target) {
-    
+
     // Listen for text highlight events
     let selection = null;
     document.addEventListener('selectionchange', event => {
         selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString();
     });
-    
+
     // Listen for and handle keydown events
     let upper = false; let ctrl = false;
     input.addEventListener('keydown', event => {
@@ -119,7 +119,7 @@ function AutoFill(input,target) {
         var event = document.createEvent('Event');
         event.initEvent('input', true, true);
         target.dispatchEvent(event);
-     
+
     });
 
     // Listen for and handle keyup events
