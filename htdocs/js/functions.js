@@ -10,9 +10,9 @@ function EditAttributeValidate(attribute,selector){
     
     switch (attribute) {
         case "mobile":
-            var regex = /^$|\d{10}]$/;
+            var regex = /^$|(?:\d{3}[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
             validated = selector.value.match(regex) ? true : false;
-            message = "Input must be a 10-digit phone number without spaces, dashes, or parenthesis.";
+            message = "Input must be a valid phone number.";
             break;
         case "mail":
             var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
