@@ -15,13 +15,13 @@
         option => "Alumni"
 */
 function get_org_units($ldap, $ldap_base) {
-    
+
     // require_once("../conf/config.inc.php");
     // require_once("../lib/ldap.inc.php");
 
     if ($ldap) {
         $filter="(objectClass=organizationalunit)";
-        $justthese = array("dn", "ou"); 
+        $justthese = array("dn", "ou");
         $search = ldap_search($ldap, $ldap_base, $filter, $justthese);
         $errno = ldap_errno($ldap);
         // $orgUnits = ldap_get_entries($ldap, $search);
@@ -51,7 +51,7 @@ function get_org_units($ldap, $ldap_base) {
                 // print_r($ou_tree[$i]);
                 // echo "<br>";
             }
-            
+
             // Sort Org Structure for better human readibility
             usort($ou_tree, 'sortByOption');
             ldap_free_result($search);
@@ -63,7 +63,7 @@ function get_org_units($ldap, $ldap_base) {
     return $ou_tree;
 }
 
-/*  
+/*
     Query LDAP for list of Group Memberships
 */
 function get_group_memberships($ldap, $dn, $ldap_user_filter) {
@@ -115,7 +115,7 @@ function get_group_memberships($ldap, $dn, $ldap_user_filter) {
 }
 
 
-/*  
+/*
     Query LDAP for list of all available groups
 */
 function get_groups($ldap, $ldap_group_base) {
@@ -129,12 +129,12 @@ function get_groups($ldap, $ldap_group_base) {
         /* Query #3: Get Groups Units */
 
         $filter="(objectClass=group)";
-        $justthese = array("dn"); 
+        $justthese = array("dn");
         $search = ldap_search($ldap, $ldap_group_base, $filter, $justthese);
         $errno = ldap_errno($ldap);
         // $orgUnits = ldap_get_entries($ldap, $search);
         // print_r($orgUnits);
-        
+
         if ( $errno ) {
             $result = "ldaperror";
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
@@ -149,7 +149,7 @@ function get_groups($ldap, $ldap_group_base) {
                 // echo "<br>";
             }
             usort($groups, 'sortByOption');
-            
+
         }
         ldap_free_result($search);
 
@@ -160,7 +160,7 @@ function get_groups($ldap, $ldap_group_base) {
 }
 
 
-/*  
+/*
     Perform "loose" LDAP queries given an attribute and/or input
 */
 function query_ldap($ldap, $ldap_base, $attr, $input) {
@@ -176,7 +176,7 @@ function query_ldap($ldap, $ldap_base, $attr, $input) {
             $filter="(".$attr."=".$input.")";
             $search = ldap_search($ldap, $ldap_base, $filter, array("dn"),1,25,10);
             $errno = ldap_errno($ldap);
-            
+
             if ( $errno ) {
                 $result = "ldaperror";
                 error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
@@ -192,7 +192,7 @@ function query_ldap($ldap, $ldap_base, $attr, $input) {
                         $sub_array[]['dn'] = $entry['dn'];
                     }
                 }
-            
+
             }
             ldap_free_result($search);
 
