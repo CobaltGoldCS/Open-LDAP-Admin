@@ -42,9 +42,15 @@ function get_org_units($ldap, $ldap_base) {
                 $exploded_ous = array_reverse(ldap_explode_dn($orgUnits[$i]['dn'],2));// Explode OU's ommitting "DN=" and "OU="
                 // print_r($exploded_ous);
                 for ($j=2; $j < $exploded_ous['count']; $j++) {// Create sub-key for each OU in tree, ignoring top-level ($j=2)
-                    $key = !isset($ou_tree[$i]['tree'][$exploded_ous[$j]]) ? $exploded_ous[$j] : $key."\0";// Handle situation in which key already exists by appending invisible character
-                    $ou_tree[$i]['tree'][$key]['level'] = $j;// Capture directory tree-level
-                    $ou_tree[$i]['tree'][$key]['parent'] = isset($exploded_ous[$j-1])?$exploded_ous[$j-1]:'';// Capture parent
+                    $ou_name = $exploded_ous[$j];
+                    $key = $ou_name;
+
+                    if (isset($ou_tree[$i]['tree'][$ou_name])) {
+                        $key = isset($key) ? $key . "\0" : '';
+                    }
+
+                    $ou_tree[$i]['tree'][$key]['level'] = $j;
+                    $ou_tree[$i]['tree'][$key]['parent'] = isset($exploded_ous[$j - 1]) ? $exploded_ous[$j - 1] : '';
                 }
                 $ou_tree[$i]['dn'] = $orgUnits[$i]['dn'];// Create key: 'dn' --Save the DN of the Organizational Unit
                 $ou_tree[$i]['option'] = implode(" / ",array_keys($ou_tree[$i]['tree']));// Create key: 'tree' --Create human-readable text fields to show in drop-down
