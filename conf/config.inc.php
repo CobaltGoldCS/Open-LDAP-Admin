@@ -168,7 +168,7 @@ if (file_exists (dirname (__FILE__) . '/config.inc.local.php')) {
 
 # Smarty
 if (!defined("SMARTY")) {
-    define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
+    define("SMARTY", "vendor/smarty/smarty/libs/Smarty.class.php");
 }
 
 # Allow to override current settings with an extra configuration file, whose reference is passed in HTTP_HEADER $header_name_extra_config
@@ -176,7 +176,7 @@ if (isset($header_name_extra_config)) {
     $extraConfigKey = "HTTP_".strtoupper(str_replace('-','_',$header_name_extra_config));
     if (array_key_exists($extraConfigKey, $_SERVER)) {
         $extraConfig = preg_replace("/[^a-zA-Z0-9-_]+/", "", filter_var($_SERVER[$extraConfigKey], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH));
-        if (strlen($extraConfig) > 0 && file_exists (__DIR__ . "/config.inc.".$extraConfig.".php")) {
+        if (strlen($extraConfig) > 0 && file_exists (__DIR__ . "//config.inc.".$extraConfig.".php")) {
             require  __DIR__ . "/config.inc.".$extraConfig.".php";
         }
     }

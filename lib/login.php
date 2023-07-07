@@ -28,10 +28,10 @@ session_start();
 
 // Logon was requested.
 if(isset($_POST["username"]) and isset($_POST["password"])) {
-    
+
     $username = strtolower($_POST["username"]);
     $password = $_POST["password"];
-    
+
     // Input validations
     if(!empty($_POST["username"]) and !empty($_POST["password"])) {
         $autherror = logon($username, $password);// Do the login
@@ -61,8 +61,8 @@ if(isset($_POST["logoff"]) and $_POST["logoff"]){
 function logon( $username, $password) {
 
     # Connect to LDAP
-    require("../conf/config.inc.php");
-    require_once("../lib/ldap.inc.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/conf/config.inc.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/ldap.inc.php");
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
@@ -91,7 +91,7 @@ function logon( $username, $password) {
             error_log("LDAP Search error $errno  (".ldap_error($ldap).")");
 
         } else {// Else get the entries
-            
+
             $entries = ldap_get_entries($ldap, $search);
             // echo "Entries: "; print_r($entries); echo "<br>";
 
@@ -105,18 +105,18 @@ function logon( $username, $password) {
                 $memberOf = $entries[0]['memberof'];// Save group memberships
 
                 if ( !in_array(strtolower($ou), array_map('strtolower', $ldap_disallowed_ous)) ) {// Check if in allowed Organizational Unit
-                    
+
                     $bind = ldap_bind($ldap, $dn, $password);// Bind to LDAP given $dn and $password
 
                     if ($bind) {// Log them in only if LDAP bind succeeds
                         $autherror = "authsuccess";
-                        
+
                         // Admin Checks
                         $admincheck1 = ( isset($ldap_allowed_admin_users) and in_array(strtolower($uid), array_map('strtolower', $ldap_allowed_admin_users)) ? true : false );
                         $admincheck2 = ( isset($ldap_allowed_admin_ous) and in_array(strtolower($ou), array_map('strtolower', $ldap_allowed_admin_ous)) ? true : false );
                         $admincheck3 = ( isset($ldap_allowed_admin_groups) and array_in_array($memberOf, array_map('strtolower', $ldap_allowed_admin_groups)) ? true : false );
                         $isadmin = (( $admincheck1 or $admincheck2 or $admincheck3 ) ? true : false );// If any above conditions are met, set the user to be an admin.
-                        
+
                         // Update Session Variables
                         $_SESSION["username"] = $username;
                         $_SESSION["displayname"] = $displayname;
@@ -143,7 +143,7 @@ function logon( $username, $password) {
     }
 
     return $autherror;
-	    
+
 }// End logon()
 
 

@@ -1,0 +1,15 @@
+{
+    "name": "elfy/open-ldap-admin",
+    "description": "Open LDAP Admin",
+    "type": "project",
+    "license": "GPLv3.0",
+    "authors": [
+        {
+            "name": "Matthew Visnovsky",
+            "email": "matt@visnovsky.us"
+        }
+    ],
+    "require": {
+        "smarty/smarty": "^4.0"
+    }
+}
