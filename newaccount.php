@@ -3,7 +3,7 @@
  * Create a new account in LDAP directory
  */
 
-
+session_start();
 
 // Page load actions
 $authenticated = $_SESSION["authenticated"];

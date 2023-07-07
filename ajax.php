@@ -18,8 +18,13 @@
 require_once(__DIR__ . "/conf/config.inc.php");
 require_once(__DIR__ . "/lib/ldap.inc.php");
 require_once("functions.php");
+session_start();
 
 # Store GET request as variable to control which PHP is executed in this script.
+if (!$_SESSION['authenticated']) {
+    die("Oops, you're not authenticated.");
+    //return;
+}
 if (isset($_GET["request"]) and $_GET["request"]) {
 
     $request = $_GET["request"];
@@ -50,6 +55,7 @@ if ( strcmp('org_units',$request) == 0 ) {
         }
         $results = array_values($sub_options);
         echo json_encode($results);// Pass the results to javascript
+        //echo "foo";
 
     }
 }
