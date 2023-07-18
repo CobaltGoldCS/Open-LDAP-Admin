@@ -78,6 +78,10 @@ foreach ($admin_editable_attributes as $attribute) {
 foreach ($user_editable_attributes as $attribute) {
     if (array_key_exists($attribute,$attributes_map)) { $attributes_map[$attribute]['usereditable'] = true; }
 }
+
+foreach ($user_requestable_attributes as $attribute) {
+    if (array_key_exists($attribute, $attributes_map)) { $attributes_map[$attribute]['userrequestable'] = true; }
+}
 $smarty->assign('attributes_map',$attributes_map);
 
 # Assign messages
@@ -108,7 +112,6 @@ if ( !$ldap_authentication ) {// If authentication is disabled by configuration
     $authenticated = $_SESSION["authenticated"];
     $isadmin = $_SESSION['isadmin'];
 }
-
 $smarty->assign('authenticated',$_SESSION["authenticated"]);
 $smarty->assign('isadmin',$_SESSION["isadmin"]);
 $smarty->assign('displayname',$_SESSION["displayname"]);

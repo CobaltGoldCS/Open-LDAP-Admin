@@ -101,6 +101,7 @@ $display_password_expiration_date = true;
 # Editing
 $user_editable_attributes = $display_items;
 $admin_editable_attributes = $display_items;
+$user_requestable_attributes = $display_items;
 
 # Account Creation
 $user_creation_attributes = array('');// Additional attributes specified during user creation
