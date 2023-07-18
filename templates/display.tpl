@@ -54,6 +54,7 @@
                     {$faclass=$attributes_map.{$item}.faclass}
                     {$admineditable=$attributes_map.{$item}.admineditable}
                     {$usereditable=$attributes_map.{$item}.usereditable}
+                    {$userrequestable=$attributes_map.{$item}.userrequestable}
 
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
@@ -79,6 +80,9 @@
                             {foreach $attribute as $value}
                                 {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                                <!-- Add a button if user can request a modification to this attribute and user is not admin -->
+                                {elseif not $isadmin and $userrequestable}
+                                <button type="submit" style="border:none;background:none" class="fa fa-fw fa-envelope" onclick="requestEditAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
                                 {/if}
                             {/foreach}
                             </td>
