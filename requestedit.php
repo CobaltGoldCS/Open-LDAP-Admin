@@ -12,5 +12,5 @@ $edits = $_POST["editField"];
 
 // Send Email that says '{dn} is requesting a change to {attribute}: {edits}'
 
-$result = "Successfully requested change to ".$attribute;
+$result = "requestedit";
 header('Location: index.php?page=display&editattributeresult='.$result);

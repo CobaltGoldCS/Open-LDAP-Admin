@@ -101,7 +101,7 @@ function editAttribute(tableRow, attribute) {
 }
 
 /////////////////
-// Javascript function for controlling editing of attributes.
+// Javascript function for allowing users to request attributes to be changed.
 function requestEditAttribute(tableRow, attribute) {
 
     hidePreviousMessages()// Hide any previous messages

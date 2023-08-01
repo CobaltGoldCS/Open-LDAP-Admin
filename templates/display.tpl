@@ -12,19 +12,19 @@
 <div class="alert alert-success">{$msg_welcome}</div>
 
 {else} {* Else display the entry *}
-
-    {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
-        {if $editattributeresult eq 'successfuledit'}
-            <div class="alert alert-success" id="editattributeresult">
-                <i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}
-                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
+     {* Succcess Case*}
+    {if $editattributeresult neq '' and array_key_exists($editattributeresult, $success_messages)}
+        <div class="alert alert-success" id="editattributeresult">
+            <i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}
+            <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
+        </div>
+    {* Warning Case *}
+    {elseif $editattributeresult neq '' and isset($msg_{$editattributeresult})}
+        <div class="alert alert-warning" id="editattributeresult">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}
+            <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
             </div>
-        {else}
-            <div class="alert alert-warning" id="editattributeresult">
-                <i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}
-                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
-            </div>
-        {/if}
+    {* Error Case *}
     {elseif $editattributeresult neq ''}
         <div class="alert alert-danger" id="editattributeresult">
             <i class="fa fa-fw fa-exclamation-triangle"></i> Error while editing attribute: {$editattributeresult}

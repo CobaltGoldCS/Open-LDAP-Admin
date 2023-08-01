@@ -90,6 +90,13 @@ foreach ($messages as $key => $message) {
     $smarty->assign('msg_'.$key,$message);
 }
 
+# Assign Successful Message Types
+$success_messages = array(
+    'successfuledit' => 'Successfully modified attribute.',
+    'requestedit' => 'Your change request was received. Any approved changes should be reflected here.'
+);
+$smarty->assign('success_messages', $success_messages);
+
 # Other assignations
 $search = "";
 if (isset($_REQUEST["search"]) and $_REQUEST["search"]) { $search = htmlentities($_REQUEST["search"]); }

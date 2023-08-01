@@ -92,6 +92,7 @@ $messages['setorgunit'] = "Select an Organizational Unit";
 $messages['sizelimit'] = "Size limit has been reached, some entries could not be displayed";
 $messages['submit'] = "Submit";
 $messages['successfuledit'] = "Successfully modified attribute.";
+$messages['requestedit'] = "Your change request was received. Any approved changes should be reflected here.";
 $messages['title'] = "Service Desk";
 $messages['title_search'] = "Search results:";
 $messages['tooltip_emailto'] = "Send an email";
