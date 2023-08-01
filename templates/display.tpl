@@ -80,9 +80,8 @@
                             {foreach $attribute as $value}
                                 {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
-                                <!-- Add a button if user can request a modification to this attribute and user is not admin -->
-                                {elseif not $isadmin and $userrequestable}
-                                <button type="submit" style="border:none;background:none" class="fa fa-fw fa-envelope" onclick="requestEditAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                                {elseif (!$isadmin) && $userrequestable}
+                                <button type="submit" style="border:none;background:none" class="fa fa-fw fa-pencil" onclick="requestEditAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
                                 {/if}
                             {/foreach}
                             </td>
