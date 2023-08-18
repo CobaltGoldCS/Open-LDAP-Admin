@@ -397,4 +397,7 @@
 {/if}
 
 {* Page specific JS *}
+<script>
+const entry = {$entry|json_encode nofilter}
+</script>
 <script src="js/display.js"></script>

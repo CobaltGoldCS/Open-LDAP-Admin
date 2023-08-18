@@ -108,7 +108,8 @@ function requestEditAttribute(tableRow, attribute) {
 
     var targetAttribute = tableRow.querySelector("td:nth-child(3)");// Get attribute cell
     var targetEditButton = tableRow.querySelector("td:nth-child(4)");// Get edit button cell
-    
+
+    var email = document.querySelector("a.link-email").textContent; // Get the Email of the student according to Mail cell
     /////////////////
     // Save form selector
     form = document.submitedits;
@@ -133,6 +134,14 @@ function requestEditAttribute(tableRow, attribute) {
     var message = alertMsg("message-"+attribute);
 
     /////////////////
+    // Format Save Parameters for url
+    params = {
+        "previousVal" : input.placeholder,
+        "email" : email,
+        "displayname" : entry.displayname[0]
+    }
+
+    /////////////////
     // Building edit submit/save button within "td:nth-child(4)"
     var saveButton = document.createElement('button');// Create text input field <button></button>
     saveButton.id = "edit-"+attribute;
@@ -146,7 +155,7 @@ function requestEditAttribute(tableRow, attribute) {
         selector = document.getElementById("edit-"+attribute);
         validation = EditAttributeValidate(attribute,selector);
             if (validation.validated) {
-                form.action = "index.php?page=requestedit";
+                form.action = `index.php?page=requestedit&${$.param(params)}`
                 form.method = "post";
             } else {
                 event.preventDefault();// Disable default form submit action
@@ -155,7 +164,7 @@ function requestEditAttribute(tableRow, attribute) {
                 input.insertAdjacentElement('afterend',message);
             }
 
-        };
+    };
 
     /////////////////
     // Building edit cancel button within "td:nth-child(4)"

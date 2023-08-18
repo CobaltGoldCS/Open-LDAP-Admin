@@ -41,6 +41,14 @@ $ldap_allowed_admin_ous = array("OU=Managers,DC=example,DC=com");// Organization
 $ldap_allowed_admin_groups = array("CN=Administrators,OU=Groups,DC=example,DC=com");// Security Group(s) of users who are allowed to login and edit all accounts.
 $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Units of users who are NOT allowed to log in at all.
 
+# EMAIL Settings for SMTP
+$SMTP_domain = 'smtp.example.org';
+$SMTP_port = 25;
+$SMTP_username = 'your username';
+$SMTP_password = 'your password';
+$SMTP_email = 'johndoe@email.com';
+$SMTP_email_name = 'John Doe';
+
 # How display attributes
 $attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
