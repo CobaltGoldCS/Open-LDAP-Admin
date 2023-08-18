@@ -1,4 +1,9 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 require_once "./vendor/autoload.php";
 
 session_start();
@@ -31,33 +36,33 @@ if (strcmp($edits, $current_attribute) == 0)
 }
 
 // Send Email that says '{dn} is requesting a change to {attribute}: {edits}'
-// ERROR: Connection could not be established with host smtp-relay.google.com
-// Could be google blocking it? Maybe need to change smtp settings in google itself to allow emailing
-// Most suspicious code is probably the $transport definition
-// Maybe username and/or password for smtp is wrong? Check config.inc.local.php
-$transport = (new Swift_SmtpTransport($SMTP_domain, $SMTP_port))
-    ->setUsername($SMTP_username)
-    ->setPassword($SMTP_password)
-    ->setStreamOptions(array('ssl' => array('allow_self_signed' => false, 'verify_peer' => false)));
+// ERROR: 
+$mail = new PHPMailer(true);
 
-$mailer = new Swift_Mailer($transport);
+try {
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->isSMTP();
+    $mail->Host = $SMTP_domain;
+    $mail->SMTPAuth = true;
+    $mail->Username = $SMTP_username;
+    $mail->Password = $SMTP_password;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = $SMTP_port;
 
-$result = $SMTP_email;
+    // Recipient
+    $mail->setFrom($target_email);
+    $mail->addAddress($SMTP_email, $SMTP_email_name);
 
-$message = (new Swift_Message())
-    ->setSubject($fuil_name." wants to change " .$attribute." to ".$edits)
-    ->setFrom($target_email)
-    ->setTo($SMTP_email, $SMTP_email_name)
-    ->setBody("".$full_name."'s current ".$attribute.": ".$current_attribute);
-
-$sent = $mailer->send($message);
-
-if ($sent == 0) {
-    $result = "Failed to send message to IT.";
+    // Content
+    $mail->Subject = $full_name." wants to change " .$attribute." to ".$edits;
+    $mail->Body = "<b>".$full_name."'s</b> current ".$attribute.": <b>".$current_attribute;
+    $mail->AltBody = "".$full_name."'s current ".$attribute.": ".$current_attribute;
+    
+    $mail->send();
+    $result = "requestedit";
+} catch (Exception $e) {
+    $result = "Could not request change: ".$mail->ErrorInfo;
+} finally {
     header('Location: index.php?page=display&editattributeresult='.$result);
-    return;
 }
-// Cleanup and redirect back to display
-$result = "requestedit";
-header('Location: index.php?page=display&editattributeresult='.$result);
 ?>
