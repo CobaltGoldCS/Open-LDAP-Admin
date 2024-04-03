@@ -119,7 +119,7 @@ function editOrgUnit(tableRow, attribute) {
 
     /////////////////
     // Building attribute user text input field within "td:nth-child(2)"
-    var ouPicker = document.createElement('select');// Create text input field <button></button>
+    var ouPicker = document.createElement('select');// Create text input field <select></select>
     ouPicker.appendChild(document.createElement('option'));// Create blank <option></option> to be used as the placeholder option
     ouPicker.id = "edit-org_unit";
     ouPicker.name="org_unit";
