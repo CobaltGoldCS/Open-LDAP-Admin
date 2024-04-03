@@ -12,19 +12,19 @@
 <div class="alert alert-success">{$msg_welcome}</div>
 
 {else} {* Else display the entry *}
-
-    {if $editattributeresult neq '' and isset($msg_{$editattributeresult})}
-        {if $editattributeresult eq 'successfuledit'}
-            <div class="alert alert-success" id="editattributeresult">
-                <i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}
-                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
+     {* Succcess Case*}
+    {if $editattributeresult neq '' and array_key_exists($editattributeresult, $success_messages)}
+        <div class="alert alert-success" id="editattributeresult">
+            <i class="fa fa-fw fa-check"></i> {$msg_{$editattributeresult}}
+            <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
+        </div>
+    {* Warning Case *}
+    {elseif $editattributeresult neq '' and isset($msg_{$editattributeresult})}
+        <div class="alert alert-warning" id="editattributeresult">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}
+            <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
             </div>
-        {else}
-            <div class="alert alert-warning" id="editattributeresult">
-                <i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$editattributeresult}}
-                <span style="float: right;"><button  class="fa fad fa-remove" style="border:none;background:none;" onclick="clearGET('editattributeresult')"></button></span>
-            </div>
-        {/if}
+    {* Error Case *}
     {elseif $editattributeresult neq ''}
         <div class="alert alert-danger" id="editattributeresult">
             <i class="fa fa-fw fa-exclamation-triangle"></i> Error while editing attribute: {$editattributeresult}
@@ -54,6 +54,7 @@
                     {$faclass=$attributes_map.{$item}.faclass}
                     {$admineditable=$attributes_map.{$item}.admineditable}
                     {$usereditable=$attributes_map.{$item}.usereditable}
+                    {$userrequestable=$attributes_map.{$item}.userrequestable}
 
                     {if !({$entry.$attribute.0}) && ! $show_undef}
                         {continue}
@@ -79,6 +80,8 @@
                             {foreach $attribute as $value}
                                 {if ($isadmin and $admineditable) or $usereditable}
                                 <button type="submit" style="border:none;background:none;" class="fa fa-fw fa-edit" onclick="editAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
+                                {elseif (!$isadmin) && $userrequestable}
+                                <button type="submit" style="border:none;background:none" class="fa fa-fw fa-pencil" onclick="requestEditAttribute(document.getElementById('attribute-{$value}'),'{$value}')"></button>
                                 {/if}
                             {/foreach}
                             </td>
@@ -394,4 +397,7 @@
 {/if}
 
 {* Page specific JS *}
+<script>
+const entry = {$entry|json_encode nofilter}
+</script>
 <script src="js/display.js"></script>

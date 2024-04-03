@@ -78,6 +78,10 @@ foreach ($admin_editable_attributes as $attribute) {
 foreach ($user_editable_attributes as $attribute) {
     if (array_key_exists($attribute,$attributes_map)) { $attributes_map[$attribute]['usereditable'] = true; }
 }
+
+foreach ($user_requestable_attributes as $attribute) {
+    if (array_key_exists($attribute, $attributes_map)) { $attributes_map[$attribute]['userrequestable'] = true; }
+}
 $smarty->assign('attributes_map',$attributes_map);
 
 # Assign messages
@@ -85,6 +89,13 @@ $smarty->assign('lang',$lang);
 foreach ($messages as $key => $message) {
     $smarty->assign('msg_'.$key,$message);
 }
+
+# Assign Successful Message Types
+$success_messages = array(
+    'successfuledit' => 'Successfully modified attribute.',
+    'requestedit' => 'Your change request was received. Any approved changes should be reflected here.'
+);
+$smarty->assign('success_messages', $success_messages);
 
 # Other assignations
 $search = "";
@@ -108,7 +119,6 @@ if ( !$ldap_authentication ) {// If authentication is disabled by configuration
     $authenticated = $_SESSION["authenticated"];
     $isadmin = $_SESSION['isadmin'];
 }
-
 $smarty->assign('authenticated',$_SESSION["authenticated"]);
 $smarty->assign('isadmin',$_SESSION["isadmin"]);
 $smarty->assign('displayname',$_SESSION["displayname"]);
